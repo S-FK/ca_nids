@@ -1,0 +1,144 @@
+import { NavLink } from 'react-router-dom'
+import { LayoutDashboard, Terminal, Zap, Radio, Shield, ChevronLeft, ChevronRight, ShieldAlert } from 'lucide-react'
+import { useState } from 'react'
+import { useStore } from '../store/useStore'
+import { clsx } from 'clsx'
+
+const NAV = [
+  { to: '/',           icon: LayoutDashboard, label: 'Dashboard',      exact: true },
+  { to: '/control',    icon: Terminal,        label: 'Control Center' },
+  { to: '/attacks',    icon: Zap,             label: 'Attack Studio' },
+  { to: '/detection',  icon: Radio,           label: 'Live Detection' },
+  { to: '/threats',    icon: ShieldAlert,     label: 'Threat Log' },
+]
+
+export function Sidebar() {
+  const [collapsed, setCollapsed] = useState(false)
+  const { connected, simRunning, totalAttacks } = useStore()
+  const attackBadge = totalAttacks > 0 ? (totalAttacks > 99 ? '99+' : String(totalAttacks)) : null
+
+  const W = collapsed ? 64 : 220
+
+  return (
+    <aside
+      className="flex flex-col flex-shrink-0 border-r border-[rgba(255,255,255,0.06)] transition-all duration-300"
+      style={{ width: W, background: 'rgba(6,10,15,0.95)', backdropFilter: 'blur(20px)' }}
+    >
+      {/* Logo row */}
+      <div
+        className="flex items-center gap-3 px-4 border-b border-[rgba(255,255,255,0.06)]"
+        style={{ height: 56, flexShrink: 0 }}
+      >
+        <div
+          className="flex items-center justify-center w-8 h-8 rounded-lg flex-shrink-0"
+          style={{ background: 'rgba(0,255,136,0.08)', border: '1px solid rgba(0,255,136,0.2)' }}
+        >
+          <Shield size={15} className="text-neon-green" />
+        </div>
+        {!collapsed && (
+          <div className="overflow-hidden">
+            <p className="font-bold text-sm text-ink-0 leading-none">CA-xNIDS</p>
+            <p className="mono-label mt-0.5">SOC Platform</p>
+          </div>
+        )}
+      </div>
+
+      {/* Nav links */}
+      <nav className="flex-1 py-3 px-2 space-y-0.5">
+        {NAV.map(({ to, icon: Icon, label, exact }) => (
+          <NavLink
+            key={to}
+            to={to}
+            end={exact}
+            className={({ isActive }) =>
+              clsx(
+                'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-150 group relative',
+                isActive
+                  ? 'bg-[rgba(0,255,136,0.08)] text-neon-green'
+                  : 'text-ink-2 hover:text-ink-0 hover:bg-[rgba(255,255,255,0.04)]'
+              )
+            }
+          >
+            {({ isActive }) => (
+              <>
+                {/* Active indicator bar */}
+                {isActive && (
+                  <span
+                    className="absolute left-0 top-2 bottom-2 w-0.5 rounded-r-full"
+                    style={{ background: '#00ff88', boxShadow: '0 0 6px #00ff88' }}
+                  />
+                )}
+                <Icon size={16} className={clsx('flex-shrink-0', isActive ? 'text-neon-green' : '')} />
+                {!collapsed && (
+                  <span className="text-sm font-medium flex-1">{label}</span>
+                )}
+                {/* Attack count badge on Threat Log */}
+                {to === '/threats' && attackBadge && !collapsed && (
+                  <span className="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded-full flex-shrink-0"
+                    style={{ background: 'rgba(255,71,87,0.15)', color: '#ff4757', border: '1px solid rgba(255,71,87,0.3)' }}>
+                    {attackBadge}
+                  </span>
+                )}
+                {/* Tooltip when collapsed */}
+                {collapsed && (
+                  <div className="absolute left-14 z-50 px-2 py-1 rounded text-xs font-medium pointer-events-none
+                                  opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap"
+                    style={{ background: '#0f1621', border: '1px solid rgba(255,255,255,0.1)', color: '#e2e8f0' }}>
+                    {label}
+                  </div>
+                )}
+              </>
+            )}
+          </NavLink>
+        ))}
+      </nav>
+
+      {/* Bottom status + collapse toggle */}
+      <div className="p-3 border-t border-[rgba(255,255,255,0.06)] space-y-3">
+        {/* Status indicators */}
+        {!collapsed && (
+          <div className="space-y-2 px-1">
+            <div className="flex items-center justify-between">
+              <span className="mono-label">WS</span>
+              <div className="flex items-center gap-1.5">
+                <span
+                  className="w-1.5 h-1.5 rounded-full"
+                  style={{
+                    background: connected ? '#00ff88' : '#ff4757',
+                    boxShadow: connected ? '0 0 4px #00ff88' : 'none',
+                  }}
+                />
+                <span className="mono-label" style={{ color: connected ? '#00ff88' : '#ff4757' }}>
+                  {connected ? 'LIVE' : 'OFF'}
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="mono-label">SIM</span>
+              <span className="mono-label" style={{ color: simRunning ? '#00ff88' : '#475569' }}>
+                {simRunning ? 'RUNNING' : 'STOPPED'}
+              </span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="mono-label">ATTACKS</span>
+              <span className="mono-label" style={{ color: totalAttacks > 0 ? '#ff4757' : '#475569' }}>
+                {totalAttacks}
+              </span>
+            </div>
+          </div>
+        )}
+
+        {/* Collapse button */}
+        <button
+          onClick={() => setCollapsed(!collapsed)}
+          className="w-full flex items-center justify-center gap-2 py-2 rounded-lg
+                     text-ink-3 hover:text-ink-1 hover:bg-[rgba(255,255,255,0.04)]
+                     transition-all duration-150 text-xs"
+        >
+          {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
+          {!collapsed && <span className="font-mono text-xs">Collapse</span>}
+        </button>
+      </div>
+    </aside>
+  )
+}

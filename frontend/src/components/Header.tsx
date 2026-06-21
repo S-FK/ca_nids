@@ -158,7 +158,7 @@ export function Header() {
         borderBottom: '1px solid rgba(255,255,255,0.06)',
       }}
     >
-      <div className="h-full flex items-center px-5 gap-4">
+      <div className="h-full flex items-center px-3 sm:px-5 gap-2 sm:gap-4 min-w-0">
         {/* Left: Brand */}
         <div className="flex items-center gap-3 flex-shrink-0">
           <div
@@ -167,7 +167,7 @@ export function Header() {
           >
             <Shield size={16} className="text-neon-green" />
           </div>
-          <div className="flex flex-col leading-none">
+          <div className="hidden sm:flex flex-col leading-none">
             <span className="font-bold text-sm tracking-tight text-ink-0">CA-xNIDS</span>
             <span className="mono-label" style={{ marginTop: 2 }}>
               Confidence-Aware Threat Intelligence
@@ -176,18 +176,18 @@ export function Header() {
         </div>
 
         {/* Separator */}
-        <div className="w-px h-6 bg-surface-3 flex-shrink-0 mx-1" />
+        <div className="hidden md:block w-px h-6 bg-surface-3 flex-shrink-0 mx-1" />
 
         {/* Center: Attack ticker */}
-        <div className="flex-1 min-w-0 flex items-center justify-center">
+        <div className="hidden md:flex flex-1 min-w-0 items-center justify-center">
           <AttackTicker attacks={attacks} />
         </div>
 
         {/* Right: Controls */}
-        <div className="flex items-center gap-3 flex-shrink-0">
+        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0 ml-auto">
           {/* Mode badge */}
           <span
-            className="font-mono text-xs font-bold px-2 py-0.5 rounded"
+            className="hidden sm:inline font-mono text-xs font-bold px-2 py-0.5 rounded"
             style={{
               background: detectionMode === 'ca_xnids' ? 'rgba(0,255,136,0.08)' : 'rgba(167,139,250,0.08)',
               border: `1px solid ${detectionMode === 'ca_xnids' ? 'rgba(0,255,136,0.25)' : 'rgba(167,139,250,0.25)'}`,
@@ -197,10 +197,10 @@ export function Header() {
             {detectionMode === 'ca_xnids' ? 'CA-xNIDS' : 'xNIDS'}
           </span>
 
-          <div className="w-px h-4 bg-surface-3" />
-          <LiveClock />
-          <div className="w-px h-4 bg-surface-3" />
-          <PacketRate />
+          <div className="hidden lg:block w-px h-4 bg-surface-3" />
+          <div className="hidden lg:block"><LiveClock /></div>
+          <div className="hidden xl:block w-px h-4 bg-surface-3" />
+          <div className="hidden xl:block"><PacketRate /></div>
           <div className="w-px h-4 bg-surface-3" />
           <WSStatusDot connected={connected} />
           <div className="w-px h-4 bg-surface-3" />
@@ -218,7 +218,7 @@ export function Header() {
             }
           >
             {simRunning ? <Square size={11} /> : <Play size={11} />}
-            {simRunning ? 'Stop' : 'Monitor'}
+            <span className="hidden sm:inline">{simRunning ? 'Stop' : 'Monitor'}</span>
           </motion.button>
         </div>
       </div>

@@ -72,16 +72,18 @@ function Shell() {
       <Sidebar />
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <Header />
-        <AlertBanner />
-        <main className="flex-1 overflow-y-auto">
-          <Routes>
-            <Route path="/"          element={<DashboardPage />} />
-            <Route path="/control"   element={<ControlPage />} />
-            <Route path="/attacks"   element={<AttacksPage />} />
-            <Route path="/detection" element={<DetectionPage />} />
-            <Route path="/threats"   element={<ThreatsPage />} />
-          </Routes>
-        </main>
+        <div className="relative flex-1 min-h-0">
+          <AlertBanner />
+          <main className="h-full overflow-y-auto">
+            <Routes>
+              <Route path="/"          element={<DashboardPage />} />
+              <Route path="/control"   element={<ControlPage />} />
+              <Route path="/attacks"   element={<AttacksPage />} />
+              <Route path="/detection" element={<DetectionPage />} />
+              <Route path="/threats"   element={<ThreatsPage />} />
+            </Routes>
+          </main>
+        </div>
       </div>
     </div>
   )

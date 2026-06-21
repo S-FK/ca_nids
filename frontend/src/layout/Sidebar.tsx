@@ -13,7 +13,9 @@ const NAV = [
 ]
 
 export function Sidebar() {
-  const [collapsed, setCollapsed] = useState(false)
+  const [collapsed, setCollapsed] = useState(
+    typeof window !== 'undefined' ? window.innerWidth < 1024 : false
+  )
   const { connected, simRunning, totalAttacks } = useStore()
   const attackBadge = totalAttacks > 0 ? (totalAttacks > 99 ? '99+' : String(totalAttacks)) : null
 

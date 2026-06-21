@@ -81,7 +81,7 @@ function AttackTicker({ attacks }: { attacks: AttackEvent[] }) {
           >
             <span
               className="font-mono text-xs font-bold"
-              style={{ color: TYPE_COLORS[ev.attack_type] ?? '#0F172A' }}
+              style={{ color: TYPE_COLORS[ev.attack_type] ?? 'var(--text-primary)' }}
             >
               {ev.attack_type}
             </span>
@@ -154,10 +154,10 @@ export function Header() {
         borderLeft: 'none',
         borderRight: 'none',
         borderTop: 'none',
-        background: 'rgba(255,255,255,0.88)',
+        background: 'var(--surface-chrome)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
-        borderBottom: '1px solid rgba(15,23,42,0.08)',
+        borderBottom: '1px solid rgba(var(--ink-rgb),0.08)',
       }}
     >
       <div className="h-full flex items-center px-3 sm:px-5 gap-2 sm:gap-4 min-w-0">
@@ -212,9 +212,11 @@ export function Header() {
             onClick={toggleTheme}
             aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
             className="flex items-center justify-center w-8 h-8 rounded-lg transition-colors"
-            style={{ background: 'rgba(15,23,42,0.05)', border: '1px solid rgba(15,23,42,0.08)', color: 'var(--text-secondary)' }}
+            style={{ background: 'rgba(var(--ink-rgb),0.06)', border: '1px solid rgba(var(--ink-rgb),0.1)' }}
           >
-            {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
+            {theme === 'dark'
+              ? <Sun size={14} color="var(--text-secondary)" />
+              : <Moon size={14} color="var(--text-secondary)" />}
           </button>
 
           {/* Global start/stop */}

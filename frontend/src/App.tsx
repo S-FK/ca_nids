@@ -22,7 +22,7 @@ function InitScreen() {
   return (
     <motion.div
       className="fixed inset-0 flex flex-col items-center justify-center gap-8 z-50 bg-grid"
-      style={{ background: '#F8FAFC' }}
+      style={{ background: 'var(--surface-base)' }}
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
     >
       <div className="relative w-28 h-28 flex items-center justify-center">

@@ -39,7 +39,7 @@ function StatusCard() {
   const { connected, simRunning, pipelineStatus, totalPackets, packetsPerSec, totalAttacks } = useStore()
 
   return (
-    <div className="glass p-6" style={{ background: 'rgba(255,255,255,0.85)' }}>
+    <div className="glass p-6" style={{ background: 'var(--surface-card-translucent)' }}>
       <p className="mono-label mb-4">System Status</p>
 
       {/* Big status indicator */}
@@ -48,7 +48,7 @@ function StatusCard() {
           <div
             className="w-4 h-4 rounded-full"
             style={{
-              background: simRunning ? '#10B981' : '#334155',
+              background: simRunning ? '#10B981' : 'var(--text-secondary)',
               boxShadow: simRunning ? '0 0 12px #10B981' : 'none',
               animation: simRunning ? 'pulse-dot 2s ease-in-out infinite' : 'none',
             }}
@@ -80,7 +80,7 @@ function StatusCard() {
           { label: 'Attacks Detected',  value: totalAttacks.toString(),         icon: AlertCircle, color: '#EF4444' },
         ].map(({ label, value, icon: Icon, color }) => (
           <div key={label} className="rounded-xl p-4"
-            style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.08)' }}>
+            style={{ background: 'rgba(var(--ink-rgb),0.03)', border: '1px solid rgba(var(--ink-rgb),0.08)' }}>
             <div className="flex items-center gap-2 mb-2">
               <Icon size={13} style={{ color }} />
               <span className="mono-label">{label}</span>
@@ -147,7 +147,7 @@ function NormalTrafficCard() {
   }
 
   return (
-    <div className="glass p-6 card-accent-blue" style={{ background: 'rgba(255,255,255,0.85)' }}>
+    <div className="glass p-6 card-accent-blue" style={{ background: 'var(--surface-card-translucent)' }}>
       <div className="flex items-center gap-2 mb-2">
         <Activity size={16} className="text-neon-blue" />
         <p className="text-sm font-semibold text-ink-0">Normal Traffic</p>
@@ -197,7 +197,7 @@ function MaliciousRequestCard() {
   const color = TYPE_COLORS[type]
 
   return (
-    <div className="glass p-6 card-accent-red" style={{ background: 'rgba(255,255,255,0.85)' }}>
+    <div className="glass p-6 card-accent-red" style={{ background: 'var(--surface-card-translucent)' }}>
       <div className="flex items-center gap-2 mb-2">
         <Zap size={16} style={{ color }} />
         <p className="text-sm font-semibold text-ink-0">Malicious Request</p>
@@ -217,9 +217,9 @@ function MaliciousRequestCard() {
                 onClick={() => setType(t)}
                 className="px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all"
                 style={{
-                  background: type === t ? `${TYPE_COLORS[t]}20` : 'rgba(15,23,42,0.04)',
-                  border: `1px solid ${type === t ? TYPE_COLORS[t] + '60' : 'rgba(15,23,42,0.08)'}`,
-                  color: type === t ? TYPE_COLORS[t] : '#475569',
+                  background: type === t ? `${TYPE_COLORS[t]}20` : 'rgba(var(--ink-rgb),0.04)',
+                  border: `1px solid ${type === t ? TYPE_COLORS[t] + '60' : 'rgba(var(--ink-rgb),0.08)'}`,
+                  color: type === t ? TYPE_COLORS[t] : 'var(--text-tertiary)',
                 }}
               >
                 {t}
@@ -272,7 +272,7 @@ function DetectionModeCard() {
   }
 
   return (
-    <div className="glass p-6" style={{ background: 'rgba(255,255,255,0.85)' }}>
+    <div className="glass p-6" style={{ background: 'var(--surface-card-translucent)' }}>
       <p className="mono-label mb-1">Detection Mode</p>
       <p className="text-xs text-ink-3 mb-5 leading-relaxed">
         Choose which explanation method is used when an attack is detected.
@@ -284,14 +284,14 @@ function DetectionModeCard() {
           onClick={() => select('xnids')}
           className="text-left p-4 rounded-xl transition-all"
           style={{
-            background: detectionMode === 'xnids' ? 'rgba(139,92,246,0.10)' : 'rgba(15,23,42,0.03)',
-            border: `1px solid ${detectionMode === 'xnids' ? 'rgba(139,92,246,0.45)' : 'rgba(15,23,42,0.09)'}`,
+            background: detectionMode === 'xnids' ? 'rgba(139,92,246,0.10)' : 'rgba(var(--ink-rgb),0.03)',
+            border: `1px solid ${detectionMode === 'xnids' ? 'rgba(139,92,246,0.45)' : 'rgba(var(--ink-rgb),0.09)'}`,
             boxShadow: detectionMode === 'xnids' ? '0 0 16px rgba(139,92,246,0.12)' : 'none',
           }}
         >
           <div className="flex items-center gap-2 mb-2">
-            <FlaskConical size={14} style={{ color: detectionMode === 'xnids' ? '#8B5CF6' : '#475569' }} />
-            <span className="font-mono text-sm font-bold" style={{ color: detectionMode === 'xnids' ? '#8B5CF6' : '#334155' }}>
+            <FlaskConical size={14} style={{ color: detectionMode === 'xnids' ? '#8B5CF6' : 'var(--text-tertiary)' }} />
+            <span className="font-mono text-sm font-bold" style={{ color: detectionMode === 'xnids' ? '#8B5CF6' : 'var(--text-secondary)' }}>
               xNIDS
             </span>
             <span className="ml-auto text-xs font-mono px-1.5 py-0.5 rounded"
@@ -299,7 +299,7 @@ function DetectionModeCard() {
               Paper
             </span>
           </div>
-          <p className="text-xs leading-relaxed" style={{ color: detectionMode === 'xnids' ? '#334155' : '#475569' }}>
+          <p className="text-xs leading-relaxed" style={{ color: detectionMode === 'xnids' ? 'var(--text-secondary)' : 'var(--text-tertiary)' }}>
             Single-run LIME explanation. No confidence score. Rules always auto-deployed.
           </p>
         </button>
@@ -309,14 +309,14 @@ function DetectionModeCard() {
           onClick={() => select('ca_xnids')}
           className="text-left p-4 rounded-xl transition-all"
           style={{
-            background: detectionMode === 'ca_xnids' ? 'rgba(16,185,129,0.08)' : 'rgba(15,23,42,0.03)',
-            border: `1px solid ${detectionMode === 'ca_xnids' ? 'rgba(16,185,129,0.35)' : 'rgba(15,23,42,0.09)'}`,
+            background: detectionMode === 'ca_xnids' ? 'rgba(16,185,129,0.08)' : 'rgba(var(--ink-rgb),0.03)',
+            border: `1px solid ${detectionMode === 'ca_xnids' ? 'rgba(16,185,129,0.35)' : 'rgba(var(--ink-rgb),0.09)'}`,
             boxShadow: detectionMode === 'ca_xnids' ? '0 0 16px rgba(16,185,129,0.10)' : 'none',
           }}
         >
           <div className="flex items-center gap-2 mb-2">
-            <Cpu size={14} style={{ color: detectionMode === 'ca_xnids' ? '#10B981' : '#475569' }} />
-            <span className="font-mono text-sm font-bold" style={{ color: detectionMode === 'ca_xnids' ? '#10B981' : '#334155' }}>
+            <Cpu size={14} style={{ color: detectionMode === 'ca_xnids' ? '#10B981' : 'var(--text-tertiary)' }} />
+            <span className="font-mono text-sm font-bold" style={{ color: detectionMode === 'ca_xnids' ? '#10B981' : 'var(--text-secondary)' }}>
               CA-xNIDS
             </span>
             <span className="ml-auto text-xs font-mono px-1.5 py-0.5 rounded"
@@ -324,7 +324,7 @@ function DetectionModeCard() {
               Ours
             </span>
           </div>
-          <p className="text-xs leading-relaxed" style={{ color: detectionMode === 'ca_xnids' ? '#334155' : '#475569' }}>
+          <p className="text-xs leading-relaxed" style={{ color: detectionMode === 'ca_xnids' ? 'var(--text-secondary)' : 'var(--text-tertiary)' }}>
             Bootstrap-sampled LIME with confidence score &amp; tiered rule deployment (HIGH/MEDIUM/LOW).
           </p>
         </button>
@@ -337,10 +337,10 @@ function InjectionLog() {
   const log = useStore((s) => s.injectionLog)
 
   return (
-    <div className="glass flex flex-col" style={{ background: 'rgba(255,255,255,0.85)', minHeight: 220 }}>
+    <div className="glass flex flex-col" style={{ background: 'var(--surface-card-translucent)', minHeight: 220 }}>
       {/* Terminal header */}
-      <div className="flex items-center gap-2 px-4 py-2.5 border-b border-[rgba(15,23,42,0.08)]"
-        style={{ background: 'rgba(255,255,255,0.6)', borderRadius: '12px 12px 0 0' }}>
+      <div className="flex items-center gap-2 px-4 py-2.5 border-b border-[rgba(var(--ink-rgb),0.08)]"
+        style={{ background: 'var(--surface-card-translucent-3)', borderRadius: '12px 12px 0 0' }}>
         <div className="flex items-center gap-1.5 mr-2">
           {['#EF4444','#F59E0B','#10B981'].map(c => (
             <div key={c} className="w-2.5 h-2.5 rounded-full" style={{ background: c }} />

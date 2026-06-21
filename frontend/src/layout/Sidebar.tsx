@@ -23,12 +23,12 @@ export function Sidebar() {
 
   return (
     <aside
-      className="flex flex-col flex-shrink-0 border-r border-[rgba(15,23,42,0.08)] transition-all duration-300"
-      style={{ width: W, background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(20px)' }}
+      className="flex flex-col flex-shrink-0 border-r border-[rgba(var(--ink-rgb),0.08)] transition-all duration-300"
+      style={{ width: W, background: 'var(--surface-chrome)', backdropFilter: 'blur(20px)' }}
     >
       {/* Logo row */}
       <div
-        className="flex items-center gap-3 px-4 border-b border-[rgba(15,23,42,0.08)]"
+        className="flex items-center gap-3 px-4 border-b border-[rgba(var(--ink-rgb),0.08)]"
         style={{ height: 56, flexShrink: 0 }}
       >
         <div
@@ -57,7 +57,7 @@ export function Sidebar() {
                 'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-150 group relative',
                 isActive
                   ? 'bg-[rgba(16,185,129,0.08)] text-neon-green'
-                  : 'text-ink-2 hover:text-ink-0 hover:bg-[rgba(15,23,42,0.05)]'
+                  : 'text-ink-2 hover:text-ink-0 hover:bg-[rgba(var(--ink-rgb),0.05)]'
               )
             }
           >
@@ -85,7 +85,7 @@ export function Sidebar() {
                 {collapsed && (
                   <div className="absolute left-14 z-50 px-2 py-1 rounded text-xs font-medium pointer-events-none
                                   opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap"
-                    style={{ background: '#F1F5F9', border: '1px solid rgba(15,23,42,0.12)', color: '#0F172A' }}>
+                    style={{ background: 'var(--surface-2)', border: '1px solid rgba(var(--ink-rgb),0.12)', color: 'var(--text-primary)' }}>
                     {label}
                   </div>
                 )}
@@ -96,7 +96,7 @@ export function Sidebar() {
       </nav>
 
       {/* Bottom status + collapse toggle */}
-      <div className="p-3 border-t border-[rgba(15,23,42,0.08)] space-y-3">
+      <div className="p-3 border-t border-[rgba(var(--ink-rgb),0.08)] space-y-3">
         {/* Status indicators */}
         {!collapsed && (
           <div className="space-y-2 px-1">
@@ -117,13 +117,13 @@ export function Sidebar() {
             </div>
             <div className="flex items-center justify-between">
               <span className="mono-label">SIM</span>
-              <span className="mono-label" style={{ color: simRunning ? '#10B981' : '#475569' }}>
+              <span className="mono-label" style={{ color: simRunning ? '#10B981' : 'var(--text-tertiary)' }}>
                 {simRunning ? 'RUNNING' : 'STOPPED'}
               </span>
             </div>
             <div className="flex items-center justify-between">
               <span className="mono-label">ATTACKS</span>
-              <span className="mono-label" style={{ color: totalAttacks > 0 ? '#EF4444' : '#475569' }}>
+              <span className="mono-label" style={{ color: totalAttacks > 0 ? '#EF4444' : 'var(--text-tertiary)' }}>
                 {totalAttacks}
               </span>
             </div>
@@ -134,7 +134,7 @@ export function Sidebar() {
         <button
           onClick={() => setCollapsed(!collapsed)}
           className="w-full flex items-center justify-center gap-2 py-2 rounded-lg
-                     text-ink-3 hover:text-ink-1 hover:bg-[rgba(15,23,42,0.05)]
+                     text-ink-3 hover:text-ink-1 hover:bg-[rgba(var(--ink-rgb),0.05)]
                      transition-all duration-150 text-xs"
         >
           {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}

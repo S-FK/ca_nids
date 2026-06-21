@@ -25,8 +25,8 @@ function TierBadgeInline({ tier }: { tier: string }) {
 }
 
 function RuleBlock({ ev }: { ev: AttackEvent }) {
-  const tierColor = TIER_COLORS[ev.tier] ?? '#475569'
-  const typeColor = TYPE_COLORS[ev.attack_type] ?? '#0F172A'
+  const tierColor = TIER_COLORS[ev.tier] ?? 'var(--text-tertiary)'
+  const typeColor = TYPE_COLORS[ev.attack_type] ?? 'var(--text-primary)'
   const ts = new Date(ev.timestamp).toISOString().slice(11, 19)
 
   return (
@@ -96,14 +96,14 @@ export function DefenceRules() {
   return (
     <div
       className="glass flex flex-col"
-      style={{ maxHeight: 260, background: '#F8FAFC' }}
+      style={{ maxHeight: 260, background: 'var(--surface-base)' }}
     >
       {/* Terminal title bar */}
       <div
         className="flex items-center gap-2 px-4 py-2.5 flex-shrink-0"
         style={{
-          borderBottom: '1px solid rgba(15,23,42,0.08)',
-          background: 'rgba(255,255,255,0.6)',
+          borderBottom: '1px solid rgba(var(--ink-rgb),0.08)',
+          background: 'var(--surface-card-translucent-3)',
           borderRadius: '12px 12px 0 0',
         }}
       >
@@ -123,7 +123,7 @@ export function DefenceRules() {
       {/* Terminal body */}
       <div
         className="overflow-auto flex-1 p-4 font-mono"
-        style={{ background: '#F8FAFC' }}
+        style={{ background: 'var(--surface-base)' }}
       >
         {/* Prompt prefix */}
         <div className="flex items-center gap-1 mb-3">

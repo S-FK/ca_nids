@@ -82,15 +82,15 @@ function AttackCard({ type }: { type: AttackType }) {
       layout
       className="glass flex flex-col"
       style={{
-        background: fired ? cfg.bg : 'rgba(255,255,255,0.85)',
-        border: `1px solid ${fired ? cfg.color + '50' : 'rgba(15,23,42,0.08)'}`,
+        background: fired ? cfg.bg : 'var(--surface-card-translucent)',
+        border: `1px solid ${fired ? cfg.color + '50' : 'rgba(var(--ink-rgb),0.08)'}`,
         transition: 'background 0.4s, border 0.4s',
         boxShadow: fired ? `0 0 24px ${cfg.color}20` : 'none',
         borderLeft: `2px solid ${cfg.color}`,
       }}
     >
       {/* Header */}
-      <div className="p-5 border-b border-[rgba(15,23,42,0.06)]">
+      <div className="p-5 border-b border-[rgba(var(--ink-rgb),0.06)]">
         <div className="flex items-start gap-3">
           <div className="p-2.5 rounded-xl flex-shrink-0" style={{ background: cfg.bg, border: `1px solid ${cfg.border}` }}>
             <Icon size={18} style={{ color: cfg.color }} />
@@ -105,7 +105,7 @@ function AttackCard({ type }: { type: AttackType }) {
       </div>
 
       {/* Techniques */}
-      <div className="p-5 border-b border-[rgba(15,23,42,0.06)] flex-1">
+      <div className="p-5 border-b border-[rgba(var(--ink-rgb),0.06)] flex-1">
         <p className="mono-label mb-3">Known Techniques</p>
         <ul className="space-y-1.5">
           {cfg.techniques.map((t) => (
@@ -186,8 +186,8 @@ function CoordinatedAttack() {
     <div
       className="glass p-6"
       style={{
-        background: done ? 'rgba(239,68,68,0.06)' : 'rgba(255,255,255,0.85)',
-        border: done ? '1px solid rgba(239,68,68,0.3)' : '1px solid rgba(15,23,42,0.08)',
+        background: done ? 'rgba(239,68,68,0.06)' : 'var(--surface-card-translucent)',
+        border: done ? '1px solid rgba(239,68,68,0.3)' : '1px solid rgba(var(--ink-rgb),0.08)',
         transition: 'all 0.4s',
       }}
     >
@@ -213,9 +213,9 @@ function CoordinatedAttack() {
                   onClick={() => toggle(t)}
                   className="flex items-center gap-2 p-3 rounded-xl text-sm font-bold font-mono transition-all"
                   style={{
-                    background: active ? `${cfg.color}15` : 'rgba(15,23,42,0.03)',
-                    border: `1px solid ${active ? cfg.color + '40' : 'rgba(15,23,42,0.08)'}`,
-                    color: active ? cfg.color : '#475569',
+                    background: active ? `${cfg.color}15` : 'rgba(var(--ink-rgb),0.03)',
+                    border: `1px solid ${active ? cfg.color + '40' : 'rgba(var(--ink-rgb),0.08)'}`,
+                    color: active ? cfg.color : 'var(--text-tertiary)',
                   }}
                 >
                   <cfg.icon size={13} />

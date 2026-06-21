@@ -23,7 +23,7 @@ interface BarRowProps {
 }
 
 function BarRow({ feature, rank, maxImportance }: BarRowProps) {
-  const cfg = GROUP_CONFIG[feature.group] ?? { color: '#64748b', gradStart: '#64748b', gradEnd: '#475569', label: 'other' }
+  const cfg = GROUP_CONFIG[feature.group] ?? { color: 'var(--text-tertiary)', gradStart: 'var(--text-tertiary)', gradEnd: 'var(--text-tertiary)', label: 'other' }
   const pct = maxImportance > 0 ? (feature.importance / maxImportance) * 100 : 0
   const stdPct = maxImportance > 0 ? ((feature.importance + feature.std) / maxImportance) * 100 : 0
 
@@ -76,7 +76,7 @@ function BarRow({ feature, rank, maxImportance }: BarRowProps) {
         {/* Track */}
         <div
           className="absolute inset-0 rounded-full"
-          style={{ background: '#F1F5F9', zIndex: -1 }}
+          style={{ background: 'var(--surface-2)', zIndex: -1 }}
         />
       </div>
 
@@ -101,10 +101,10 @@ function SkeletonRow({ i }: { i: number }) {
   return (
     <div className="flex items-center gap-3" style={{ opacity: 0.15 + i * 0.05 }}>
       <span className="mono-label w-4 text-right text-ink-4">{i + 1}</span>
-      <div className="h-2 rounded flex-shrink-0" style={{ width: 130, background: '#F1F5F9' }} />
-      <div className="flex-1 h-1.5 rounded-full" style={{ background: '#F1F5F9' }} />
-      <div className="h-2 rounded" style={{ width: 36, background: '#F1F5F9' }} />
-      <div className="w-1.5 h-1.5 rounded-full" style={{ background: '#F1F5F9' }} />
+      <div className="h-2 rounded flex-shrink-0" style={{ width: 130, background: 'var(--surface-2)' }} />
+      <div className="flex-1 h-1.5 rounded-full" style={{ background: 'var(--surface-2)' }} />
+      <div className="h-2 rounded" style={{ width: 36, background: 'var(--surface-2)' }} />
+      <div className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--surface-2)' }} />
     </div>
   )
 }
@@ -117,12 +117,12 @@ export function FeatureImportance() {
     : []
 
   const maxImportance = data[0]?.importance ?? 1
-  const attackColor = latest ? (TYPE_COLORS[latest.attack_type] ?? '#0F172A') : '#475569'
+  const attackColor = latest ? (TYPE_COLORS[latest.attack_type] ?? 'var(--text-primary)') : 'var(--text-tertiary)'
 
   return (
     <div
       className="glass h-full flex flex-col p-4 relative"
-      style={{ background: 'rgba(255,255,255,0.75)' }}
+      style={{ background: 'var(--surface-card-translucent-2)' }}
     >
       {/* Title row */}
       <div className="flex items-center justify-between mb-3 flex-shrink-0">

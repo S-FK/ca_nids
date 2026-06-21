@@ -113,7 +113,7 @@ export function ConfidenceGauge() {
   return (
     <div
       className="glass h-full flex flex-col"
-      style={{ background: hasData ? cfg.bg : 'rgba(255,255,255,0.75)' }}
+      style={{ background: hasData ? cfg.bg : 'var(--surface-card-translucent-2)' }}
     >
       <div className="p-4 flex flex-col items-center h-full">
         {/* Title */}
@@ -150,7 +150,7 @@ export function ConfidenceGauge() {
             <circle
               cx={CX} cy={CY} r={R_OUTER}
               fill="none"
-              stroke="rgba(15,23,42,0.05)"
+              stroke="rgba(var(--ink-rgb),0.05)"
               strokeWidth={1}
               strokeDasharray="3 4"
             />
@@ -176,7 +176,7 @@ export function ConfidenceGauge() {
             <path
               d={arcPath(CX, CY, R_TRACK, START_DEG, START_DEG + SWEEP)}
               fill="none"
-              stroke="#F1F5F9"
+              stroke="var(--surface-2)"
               strokeWidth={16}
               strokeLinecap="round"
             />
@@ -216,7 +216,7 @@ export function ConfidenceGauge() {
                   <text
                     x={CX} y={CY + 10}
                     textAnchor="middle"
-                    fill="#475569"
+                    fill="var(--text-tertiary)"
                     fontSize={9}
                     fontFamily="JetBrains Mono, monospace"
                     letterSpacing={2}
@@ -229,7 +229,7 @@ export function ConfidenceGauge() {
                   <text
                     x={CX} y={CY - 4}
                     textAnchor="middle"
-                    fill="#334155"
+                    fill="var(--text-secondary)"
                     fontSize={28}
                     fontWeight={700}
                     fontFamily="JetBrains Mono, monospace"
@@ -239,7 +239,7 @@ export function ConfidenceGauge() {
                   <text
                     x={CX} y={CY + 12}
                     textAnchor="middle"
-                    fill="#334155"
+                    fill="var(--text-secondary)"
                     fontSize={9}
                     fontFamily="JetBrains Mono, monospace"
                     letterSpacing={2}
@@ -260,7 +260,7 @@ export function ConfidenceGauge() {
                   x={pos.x} y={pos.y}
                   textAnchor="middle"
                   dominantBaseline="middle"
-                  fill="#334155"
+                  fill="var(--text-secondary)"
                   fontSize={7}
                   fontFamily="JetBrains Mono, monospace"
                 >
@@ -282,7 +282,7 @@ export function ConfidenceGauge() {
               key={t}
               className="flex items-center justify-between px-2 py-1 rounded transition-all duration-300"
               style={{
-                background: (hasData && tier === t) ? 'rgba(15,23,42,0.04)' : 'transparent',
+                background: (hasData && tier === t) ? 'rgba(var(--ink-rgb),0.04)' : 'transparent',
                 opacity: (hasData && tier !== t) ? 0.35 : 1,
               }}
             >

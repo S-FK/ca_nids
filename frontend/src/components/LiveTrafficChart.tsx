@@ -13,7 +13,7 @@ function CustomTooltip({ active, payload }: any) {
   return (
     <div
       className="glass-bright px-3 py-2 text-xs font-mono shadow-xl"
-      style={{ borderColor: 'rgba(15,23,42,0.12)' }}
+      style={{ borderColor: 'rgba(var(--ink-rgb),0.12)' }}
     >
       <p className="text-ink-2 mb-1">pkt <span className="text-ink-1">#{d.id}</span></p>
       <p style={{ color: d.isAttack ? '#EF4444' : '#10B981' }}>
@@ -44,7 +44,7 @@ export function LiveTrafficChart() {
   return (
     <div
       className="glass h-full flex flex-col p-4"
-      style={{ background: 'rgba(255,255,255,0.75)' }}
+      style={{ background: 'var(--surface-card-translucent-2)' }}
     >
       {/* Title row */}
       <div className="flex items-center justify-between mb-3 flex-shrink-0">
@@ -109,7 +109,7 @@ export function LiveTrafficChart() {
             </defs>
 
             <CartesianGrid
-              stroke="#F1F5F9"
+              stroke="var(--surface-2)"
               strokeDasharray="none"
               vertical={false}
               horizontal={true}
@@ -125,7 +125,7 @@ export function LiveTrafficChart() {
               domain={[0, 1]}
               ticks={[0, 0.25, 0.5, 0.75, 1]}
               tick={{
-                fill: '#475569',
+                fill: 'var(--text-tertiary)',
                 fontSize: 9,
                 fontFamily: 'JetBrains Mono, monospace',
               }}
@@ -137,7 +137,7 @@ export function LiveTrafficChart() {
 
             <Tooltip
               content={<CustomTooltip />}
-              cursor={{ stroke: 'rgba(15,23,42,0.08)', strokeWidth: 1 }}
+              cursor={{ stroke: 'rgba(var(--ink-rgb),0.08)', strokeWidth: 1 }}
             />
 
             {/* Threshold line */}

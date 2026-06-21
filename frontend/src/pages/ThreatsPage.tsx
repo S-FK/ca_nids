@@ -41,13 +41,13 @@ function ThreatCard({ pkt }: { pkt: PacketEntry }) {
       transition={{ duration: 0.2 }}
       className="glass overflow-hidden"
       style={{
-        background: 'rgba(255,255,255,0.85)',
+        background: 'var(--surface-card-translucent)',
         borderLeft: `2px solid ${typeColor}`,
       }}
     >
       {/* Summary row */}
       <div
-        className="flex items-center gap-4 px-5 py-3.5 cursor-pointer transition-colors hover:bg-[rgba(15,23,42,0.03)]"
+        className="flex items-center gap-4 px-5 py-3.5 cursor-pointer transition-colors hover:bg-[rgba(var(--ink-rgb),0.03)]"
         onClick={() => setExpanded((v) => !v)}
       >
         {/* Type badge */}
@@ -110,14 +110,14 @@ function ThreatCard({ pkt }: { pkt: PacketEntry }) {
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <div className="px-5 pb-5 border-t border-[rgba(15,23,42,0.08)] grid grid-cols-2 gap-6 pt-4">
+            <div className="px-5 pb-5 border-t border-[rgba(var(--ink-rgb),0.08)] grid grid-cols-2 gap-6 pt-4">
               {/* Feature importance */}
               <div>
                 <p className="mono-label mb-3">Feature Attribution</p>
                 {sorted.length > 0 ? (
                   <div className="space-y-2.5">
                     {sorted.map((f, i) => {
-                      const gc = GROUP_COLORS[f.group] ?? '#64748b'
+                      const gc = GROUP_COLORS[f.group] ?? 'var(--text-tertiary)'
                       const pct = (f.importance / maxImp) * 100
                       return (
                         <div key={f.name} className="flex items-center gap-2">
@@ -201,7 +201,7 @@ export function ThreatsPage() {
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="px-6 py-4 border-b border-[rgba(15,23,42,0.08)] flex-shrink-0">
+      <div className="px-6 py-4 border-b border-[rgba(var(--ink-rgb),0.08)] flex-shrink-0">
         <div className="flex items-start justify-between">
           <div>
             <h1 className="text-lg font-bold text-ink-0 flex items-center gap-2">
@@ -213,7 +213,7 @@ export function ThreatsPage() {
 
           {/* Total counter */}
           <div className="text-right">
-            <p className="text-3xl font-bold font-mono" style={{ color: totalAttacks > 0 ? '#EF4444' : '#475569' }}>
+            <p className="text-3xl font-bold font-mono" style={{ color: totalAttacks > 0 ? '#EF4444' : 'var(--text-tertiary)' }}>
               {totalAttacks}
             </p>
             <p className="mono-label">total threats</p>
@@ -229,9 +229,9 @@ export function ThreatsPage() {
               onClick={() => setFilter(null)}
               className="px-3 py-1 rounded-lg text-xs font-mono font-bold transition-all"
               style={{
-                background: filter === null ? 'rgba(15,23,42,0.1)' : 'rgba(15,23,42,0.03)',
-                border: `1px solid ${filter === null ? 'rgba(255,255,255,0.2)' : 'rgba(15,23,42,0.08)'}`,
-                color: filter === null ? '#0F172A' : '#475569',
+                background: filter === null ? 'var(--color-primary-50)' : 'rgba(var(--ink-rgb),0.03)',
+                border: `1px solid ${filter === null ? 'var(--color-primary-500)' : 'rgba(var(--ink-rgb),0.08)'}`,
+                color: filter === null ? 'var(--color-primary-700)' : 'var(--text-secondary)',
               }}
             >
               ALL ({totalAttacks})
@@ -242,9 +242,9 @@ export function ThreatsPage() {
                 onClick={() => setFilter(filter === t ? null : t)}
                 className="px-3 py-1 rounded-lg text-xs font-mono font-bold transition-all"
                 style={{
-                  background: filter === t ? `${TYPE_BG[t]}` : 'rgba(15,23,42,0.03)',
-                  border: `1px solid ${filter === t ? TYPE_COLORS[t] + '50' : 'rgba(15,23,42,0.08)'}`,
-                  color: filter === t ? TYPE_COLORS[t] : '#475569',
+                  background: filter === t ? `${TYPE_BG[t]}` : 'rgba(var(--ink-rgb),0.03)',
+                  border: `1px solid ${filter === t ? TYPE_COLORS[t] + '50' : 'rgba(var(--ink-rgb),0.08)'}`,
+                  color: filter === t ? TYPE_COLORS[t] : 'var(--text-tertiary)',
                 }}
               >
                 {t} ({attackTypeCounts[t] ?? 0})

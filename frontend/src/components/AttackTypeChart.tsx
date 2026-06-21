@@ -48,7 +48,7 @@ export function AttackTypeChart() {
   return (
     <div
       className="glass h-full flex flex-col p-4 relative"
-      style={{ background: 'rgba(255,255,255,0.75)' }}
+      style={{ background: 'var(--surface-card-translucent-2)' }}
     >
       {/* Title */}
       <div className="flex items-center justify-between mb-3 flex-shrink-0">
@@ -79,10 +79,10 @@ export function AttackTypeChart() {
                 ? data.filter((d) => d.value > 0).map((d) => (
                     <Cell
                       key={d.name}
-                      fill={TYPE_CONFIG[d.name as keyof typeof TYPE_CONFIG]?.color ?? '#334155'}
+                      fill={TYPE_CONFIG[d.name as keyof typeof TYPE_CONFIG]?.color ?? 'var(--text-secondary)'}
                     />
                   ))
-                : <Cell fill="#F1F5F9" />
+                : <Cell fill="var(--surface-2)" />
               }
             </Pie>
             {hasData && <Tooltip content={<CustomTooltip />} />}
@@ -96,7 +96,7 @@ export function AttackTypeChart() {
           <div className="text-center">
             <div
               className="w-24 h-24 rounded-full border-4 mx-auto mb-3 flex items-center justify-center"
-              style={{ borderColor: '#F1F5F9' }}
+              style={{ borderColor: 'var(--surface-2)' }}
             >
               <span className="mono-label" style={{ opacity: 0.3 }}>—</span>
             </div>
@@ -126,7 +126,7 @@ export function AttackTypeChart() {
               {/* Animated progress bar */}
               <div
                 className="flex-1 rounded-full overflow-hidden"
-                style={{ height: 4, background: '#F1F5F9' }}
+                style={{ height: 4, background: 'var(--surface-2)' }}
               >
                 <motion.div
                   className="h-full rounded-full"
@@ -137,7 +137,7 @@ export function AttackTypeChart() {
                 />
               </div>
 
-              <span className="mono-label text-right flex-shrink-0" style={{ width: 36, color: '#64748b' }}>
+              <span className="mono-label text-right flex-shrink-0" style={{ width: 36, color: 'var(--text-tertiary)' }}>
                 {count > 0 ? `${pct.toFixed(0)}%` : '—'}
               </span>
               <span className="mono-label text-right flex-shrink-0" style={{ width: 16 }}>

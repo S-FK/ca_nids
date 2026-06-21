@@ -63,6 +63,15 @@
   --shadow-card:       0 4px 12px rgba(15,23,42,0.05);
   --shadow-card-hover: 0 12px 24px rgba(15,23,42,0.08);
   --shadow-elevated:   0 20px 40px rgba(15,23,42,0.12);
+
+  /* Theme-aware tint channel for borders/hover overlays: use as
+     rgba(var(--ink-rgb), <alpha>) so the tint flips with the theme. */
+  --ink-rgb: 15,23,42;
+  /* Translucent "frosted" surfaces (header/sidebar chrome vs. cards) */
+  --surface-chrome:             rgba(255,255,255,0.9);
+  --surface-card-translucent:   rgba(255,255,255,0.85);
+  --surface-card-translucent-2: rgba(255,255,255,0.75);
+  --surface-card-translucent-3: rgba(255,255,255,0.6);
 }
 
 .dark {
@@ -111,6 +120,13 @@
   --shadow-card:       0 4px 14px rgba(0,0,0,0.35);
   --shadow-card-hover: 0 14px 28px rgba(0,0,0,0.45);
   --shadow-elevated:   0 24px 48px rgba(0,0,0,0.55);
+
+  /* Light-colored tint on dark backgrounds for borders/hover overlays */
+  --ink-rgb: 226,232,240;
+  --surface-chrome:             rgba(15,23,42,0.85);
+  --surface-card-translucent:   rgba(30,41,59,0.85);
+  --surface-card-translucent-2: rgba(30,41,59,0.75);
+  --surface-card-translucent-3: rgba(30,41,59,0.6);
 }
 
 @layer base {

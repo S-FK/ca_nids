@@ -35,7 +35,7 @@ function ActionCell({ tier }: { tier: string }) {
 
 function LogRow({ ev, isNew }: { ev: AttackEvent; isNew: boolean }) {
   const ts = new Date(ev.timestamp).toISOString().slice(11, 19)
-  const typeCfg = TYPE_CONFIG[ev.attack_type] ?? { color: '#0F172A', bg: 'rgba(15,23,42,0.06)' }
+  const typeCfg = TYPE_CONFIG[ev.attack_type] ?? { color: 'var(--text-primary)', bg: 'rgba(var(--ink-rgb),0.06)' }
   const topFeature = ev.features?.[0]?.name ?? '—'
 
   return (
@@ -44,7 +44,7 @@ function LogRow({ ev, isNew }: { ev: AttackEvent; isNew: boolean }) {
       animate={{ opacity: 1, backgroundColor: 'rgba(0,0,0,0)' }}
       transition={{ duration: 0.35, ease: 'easeOut' }}
       className="border-b group"
-      style={{ borderColor: 'rgba(15,23,42,0.05)' }}
+      style={{ borderColor: 'rgba(var(--ink-rgb),0.05)' }}
     >
       {/* Time */}
       <td className="py-2 px-3 whitespace-nowrap">
@@ -68,7 +68,7 @@ function LogRow({ ev, isNew }: { ev: AttackEvent; isNew: boolean }) {
             className="h-1 rounded-full"
             style={{
               width: 32,
-              background: '#F1F5F9',
+              background: 'var(--surface-2)',
               position: 'relative',
               overflow: 'hidden',
             }}
@@ -125,12 +125,12 @@ export function AttackLog() {
   return (
     <div
       className="glass flex flex-col"
-      style={{ maxHeight: 280, background: 'rgba(255,255,255,0.75)' }}
+      style={{ maxHeight: 280, background: 'var(--surface-card-translucent-2)' }}
     >
       {/* Title row */}
       <div
         className="flex items-center justify-between px-4 py-3 flex-shrink-0"
-        style={{ borderBottom: '1px solid rgba(15,23,42,0.05)' }}
+        style={{ borderBottom: '1px solid rgba(var(--ink-rgb),0.05)' }}
       >
         <div className="flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-neon-red animate-pulse-dot" />
@@ -150,8 +150,8 @@ export function AttackLog() {
           </div>
         ) : (
           <table className="w-full border-collapse">
-            <thead className="sticky top-0 z-10" style={{ background: '#F8FAFC' }}>
-              <tr style={{ borderBottom: '1px solid rgba(15,23,42,0.08)' }}>
+            <thead className="sticky top-0 z-10" style={{ background: 'var(--surface-base)' }}>
+              <tr style={{ borderBottom: '1px solid rgba(var(--ink-rgb),0.08)' }}>
                 {HEADERS.map((h) => (
                   <th
                     key={h}

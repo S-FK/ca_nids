@@ -65,7 +65,7 @@ function KPICard({
         <motion.div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: 'linear-gradient(105deg, transparent 40%, rgba(15,23,42,0.06) 50%, transparent 60%)',
+            background: 'linear-gradient(105deg, transparent 40%, rgba(var(--ink-rgb),0.06) 50%, transparent 60%)',
           }}
           initial={{ x: '-100%' }}
           animate={{ x: '200%' }}

@@ -1,8 +1,9 @@
-import { Shield, Play, Square } from 'lucide-react'
+import { Shield, Play, Square, Sun, Moon } from 'lucide-react'
 import { useStore } from '../store/useStore'
 import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import type { AttackEvent } from '../types'
+import { useTheme } from '../theme/useTheme'
 
 async function apiControl(action: 'start' | 'stop') {
   await fetch('/api/control', {
@@ -13,10 +14,10 @@ async function apiControl(action: 'start' | 'stop') {
 }
 
 const TYPE_COLORS: Record<string, string> = {
-  DoS:   '#ff4757',
-  Probe: '#fbbf24',
-  R2L:   '#a78bfa',
-  U2R:   '#60a5fa',
+  DoS:   '#EF4444',
+  Probe: '#F59E0B',
+  R2L:   '#8B5CF6',
+  U2R:   '#3B82F6',
 }
 
 function LiveClock() {
@@ -80,7 +81,7 @@ function AttackTicker({ attacks }: { attacks: AttackEvent[] }) {
           >
             <span
               className="font-mono text-xs font-bold"
-              style={{ color: TYPE_COLORS[ev.attack_type] ?? '#e2e8f0' }}
+              style={{ color: TYPE_COLORS[ev.attack_type] ?? '#0F172A' }}
             >
               {ev.attack_type}
             </span>
@@ -106,7 +107,7 @@ function WSStatusDot({ connected }: { connected: boolean }) {
         <div
           className="w-2 h-2 rounded-full"
           style={{
-            background: connected ? '#00ff88' : '#ff4757',
+            background: connected ? '#10B981' : '#EF4444',
             animation: connected ? 'pulse-dot 2s ease-in-out infinite' : 'none',
           }}
         />
@@ -114,7 +115,7 @@ function WSStatusDot({ connected }: { connected: boolean }) {
           <div
             className="absolute inset-0 w-2 h-2 rounded-full"
             style={{
-              background: '#00ff88',
+              background: '#10B981',
               animation: 'pulse-ring 2s ease-out infinite',
             }}
           />
@@ -122,7 +123,7 @@ function WSStatusDot({ connected }: { connected: boolean }) {
       </div>
       <span
         className="mono-label"
-        style={{ color: connected ? '#00ff88' : '#ff4757' }}
+        style={{ color: connected ? '#10B981' : '#EF4444' }}
       >
         {connected ? 'LIVE' : 'OFFLINE'}
       </span>
@@ -132,6 +133,7 @@ function WSStatusDot({ connected }: { connected: boolean }) {
 
 export function Header() {
   const { connected, attacks, simRunning, detectionMode } = useStore()
+  const { theme, toggleTheme } = useTheme()
 
   const toggleMonitoring = () => {
     if (simRunning) {
@@ -152,10 +154,10 @@ export function Header() {
         borderLeft: 'none',
         borderRight: 'none',
         borderTop: 'none',
-        background: 'rgba(6,10,15,0.92)',
+        background: 'rgba(255,255,255,0.88)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
-        borderBottom: '1px solid rgba(255,255,255,0.06)',
+        borderBottom: '1px solid rgba(15,23,42,0.08)',
       }}
     >
       <div className="h-full flex items-center px-3 sm:px-5 gap-2 sm:gap-4 min-w-0">
@@ -163,7 +165,7 @@ export function Header() {
         <div className="flex items-center gap-3 flex-shrink-0">
           <div
             className="flex items-center justify-center w-8 h-8 rounded-lg glow-green"
-            style={{ background: 'rgba(0,255,136,0.08)', border: '1px solid rgba(0,255,136,0.2)' }}
+            style={{ background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.2)' }}
           >
             <Shield size={16} className="text-neon-green" />
           </div>
@@ -189,9 +191,9 @@ export function Header() {
           <span
             className="hidden sm:inline font-mono text-xs font-bold px-2 py-0.5 rounded"
             style={{
-              background: detectionMode === 'ca_xnids' ? 'rgba(0,255,136,0.08)' : 'rgba(167,139,250,0.08)',
-              border: `1px solid ${detectionMode === 'ca_xnids' ? 'rgba(0,255,136,0.25)' : 'rgba(167,139,250,0.25)'}`,
-              color: detectionMode === 'ca_xnids' ? '#00ff88' : '#a78bfa',
+              background: detectionMode === 'ca_xnids' ? 'rgba(16,185,129,0.08)' : 'rgba(139,92,246,0.08)',
+              border: `1px solid ${detectionMode === 'ca_xnids' ? 'rgba(16,185,129,0.25)' : 'rgba(139,92,246,0.25)'}`,
+              color: detectionMode === 'ca_xnids' ? '#10B981' : '#8B5CF6',
             }}
           >
             {detectionMode === 'ca_xnids' ? 'CA-xNIDS' : 'xNIDS'}
@@ -205,6 +207,16 @@ export function Header() {
           <WSStatusDot connected={connected} />
           <div className="w-px h-4 bg-surface-3" />
 
+          {/* Theme toggle */}
+          <button
+            onClick={toggleTheme}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            className="flex items-center justify-center w-8 h-8 rounded-lg transition-colors"
+            style={{ background: 'rgba(15,23,42,0.05)', border: '1px solid rgba(15,23,42,0.08)', color: 'var(--text-secondary)' }}
+          >
+            {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
+          </button>
+
           {/* Global start/stop */}
           <motion.button
             whileTap={{ scale: 0.95 }}
@@ -213,8 +225,8 @@ export function Header() {
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
             style={
               simRunning
-                ? { background: 'rgba(255,71,87,0.12)', border: '1px solid rgba(255,71,87,0.35)', color: '#ff4757' }
-                : { background: 'rgba(0,255,136,0.1)', border: '1px solid rgba(0,255,136,0.3)', color: '#00ff88' }
+                ? { background: 'rgba(239,68,68,0.12)', border: '1px solid rgba(239,68,68,0.35)', color: '#EF4444' }
+                : { background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.3)', color: '#10B981' }
             }
           >
             {simRunning ? <Square size={11} /> : <Play size={11} />}

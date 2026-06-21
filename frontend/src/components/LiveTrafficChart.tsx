@@ -13,10 +13,10 @@ function CustomTooltip({ active, payload }: any) {
   return (
     <div
       className="glass-bright px-3 py-2 text-xs font-mono shadow-xl"
-      style={{ borderColor: 'rgba(255,255,255,0.1)' }}
+      style={{ borderColor: 'rgba(15,23,42,0.12)' }}
     >
       <p className="text-ink-2 mb-1">pkt <span className="text-ink-1">#{d.id}</span></p>
-      <p style={{ color: d.isAttack ? '#ff4757' : '#00ff88' }}>
+      <p style={{ color: d.isAttack ? '#EF4444' : '#10B981' }}>
         {(d.prob * 100).toFixed(1)}% anomaly
       </p>
       {d.isAttack && <p className="text-neon-red mt-0.5">⚠ ATTACK</p>}
@@ -44,7 +44,7 @@ export function LiveTrafficChart() {
   return (
     <div
       className="glass h-full flex flex-col p-4"
-      style={{ background: 'rgba(10,15,22,0.8)' }}
+      style={{ background: 'rgba(255,255,255,0.75)' }}
     >
       {/* Title row */}
       <div className="flex items-center justify-between mb-3 flex-shrink-0">
@@ -55,26 +55,26 @@ export function LiveTrafficChart() {
             <span className="flex items-center gap-1.5">
               <span
                 className="inline-block rounded-full"
-                style={{ width: 20, height: 2, background: '#00ff88' }}
+                style={{ width: 20, height: 2, background: '#10B981' }}
               />
-              <span className="mono-label" style={{ color: '#00ff88' }}>Normal</span>
+              <span className="mono-label" style={{ color: '#10B981' }}>Normal</span>
             </span>
             <span className="flex items-center gap-1.5">
               <span
                 className="inline-block rounded-full"
-                style={{ width: 20, height: 2, background: '#ff4757' }}
+                style={{ width: 20, height: 2, background: '#EF4444' }}
               />
-              <span className="mono-label" style={{ color: '#ff4757' }}>Attack</span>
+              <span className="mono-label" style={{ color: '#EF4444' }}>Attack</span>
             </span>
             <span className="flex items-center gap-1.5">
               <span
                 className="inline-block"
                 style={{
                   width: 20, height: 1,
-                  borderTop: '1px dashed #fbbf24',
+                  borderTop: '1px dashed #F59E0B',
                 }}
               />
-              <span className="mono-label" style={{ color: '#fbbf24' }}>Threshold</span>
+              <span className="mono-label" style={{ color: '#F59E0B' }}>Threshold</span>
             </span>
           </div>
         </div>
@@ -90,7 +90,7 @@ export function LiveTrafficChart() {
         <div
           className="absolute inset-0 pointer-events-none z-10"
           style={{
-            background: 'linear-gradient(105deg, transparent 45%, rgba(0,255,136,0.02) 50%, transparent 55%)',
+            background: 'linear-gradient(105deg, transparent 45%, rgba(16,185,129,0.02) 50%, transparent 55%)',
             animation: 'sweep 4s ease-in-out infinite',
           }}
         />
@@ -99,17 +99,17 @@ export function LiveTrafficChart() {
           <ComposedChart data={data} margin={{ top: 8, right: 8, bottom: 0, left: -8 }}>
             <defs>
               <linearGradient id="lgNormal" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%"   stopColor="#00ff88" stopOpacity={0.25} />
-                <stop offset="100%" stopColor="#00ff88" stopOpacity={0} />
+                <stop offset="0%"   stopColor="#10B981" stopOpacity={0.25} />
+                <stop offset="100%" stopColor="#10B981" stopOpacity={0} />
               </linearGradient>
               <linearGradient id="lgAttack" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%"   stopColor="#ff4757" stopOpacity={0.3} />
-                <stop offset="100%" stopColor="#ff4757" stopOpacity={0} />
+                <stop offset="0%"   stopColor="#EF4444" stopOpacity={0.3} />
+                <stop offset="100%" stopColor="#EF4444" stopOpacity={0} />
               </linearGradient>
             </defs>
 
             <CartesianGrid
-              stroke="#0f1621"
+              stroke="#F1F5F9"
               strokeDasharray="none"
               vertical={false}
               horizontal={true}
@@ -137,13 +137,13 @@ export function LiveTrafficChart() {
 
             <Tooltip
               content={<CustomTooltip />}
-              cursor={{ stroke: 'rgba(255,255,255,0.06)', strokeWidth: 1 }}
+              cursor={{ stroke: 'rgba(15,23,42,0.08)', strokeWidth: 1 }}
             />
 
             {/* Threshold line */}
             <ReferenceLine
               y={THRESHOLD}
-              stroke="#fbbf24"
+              stroke="#F59E0B"
               strokeDasharray="6 4"
               strokeOpacity={0.5}
               strokeWidth={1}
@@ -154,7 +154,7 @@ export function LiveTrafficChart() {
               <ReferenceLine
                 key={id}
                 x={id}
-                stroke="#ff4757"
+                stroke="#EF4444"
                 strokeOpacity={0.2}
                 strokeWidth={1}
                 strokeDasharray="2 2"
@@ -164,7 +164,7 @@ export function LiveTrafficChart() {
             <Area
               type="monotone"
               dataKey="normal"
-              stroke="#00ff88"
+              stroke="#10B981"
               strokeWidth={2}
               fill="url(#lgNormal)"
               dot={false}
@@ -174,7 +174,7 @@ export function LiveTrafficChart() {
             <Area
               type="monotone"
               dataKey="attack"
-              stroke="#ff4757"
+              stroke="#EF4444"
               strokeWidth={2}
               fill="url(#lgAttack)"
               dot={false}

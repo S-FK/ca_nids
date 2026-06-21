@@ -65,7 +65,7 @@ function KPICard({
         <motion.div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: 'linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.05) 50%, transparent 60%)',
+            background: 'linear-gradient(105deg, transparent 40%, rgba(15,23,42,0.06) 50%, transparent 60%)',
           }}
           initial={{ x: '-100%' }}
           animate={{ x: '200%' }}
@@ -113,8 +113,8 @@ export function KPICards() {
         value={totalPackets}
         gradClass="grad-blue"
         accentClass="card-accent-blue"
-        iconBg="rgba(96,165,250,0.1)"
-        iconColor="#60a5fa"
+        iconBg="rgba(59,130,246,0.1)"
+        iconColor="#3B82F6"
       />
       <KPICard
         icon={<AlertTriangle size={16} />}
@@ -124,8 +124,8 @@ export function KPICards() {
         gradClass="grad-red"
         accentClass="card-accent-red"
         glowClass="glow-red"
-        iconBg="rgba(255,71,87,0.1)"
-        iconColor="#ff4757"
+        iconBg="rgba(239,68,68,0.1)"
+        iconColor="#EF4444"
       />
       <KPICard
         icon={<CheckCircle size={16} />}
@@ -135,8 +135,8 @@ export function KPICards() {
         gradClass="grad-green"
         accentClass="card-accent-green"
         glowClass="glow-green"
-        iconBg="rgba(0,255,136,0.1)"
-        iconColor="#00ff88"
+        iconBg="rgba(16,185,129,0.1)"
+        iconColor="#10B981"
       />
       <KPICard
         icon={<Eye size={16} />}
@@ -146,8 +146,8 @@ export function KPICards() {
         gradClass="grad-amber"
         accentClass="card-accent-amber"
         glowClass="glow-amber"
-        iconBg="rgba(251,191,36,0.1)"
-        iconColor="#fbbf24"
+        iconBg="rgba(245,158,11,0.1)"
+        iconColor="#F59E0B"
       />
       <KPICard
         icon={<Clock size={16} />}
@@ -157,8 +157,8 @@ export function KPICards() {
         gradClass="grad-purple"
         accentClass="card-accent-purple"
         glowClass="glow-purple"
-        iconBg="rgba(167,139,250,0.1)"
-        iconColor="#a78bfa"
+        iconBg="rgba(139,92,246,0.1)"
+        iconColor="#8B5CF6"
       />
     </div>
   )

@@ -3,10 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import type { AttackEvent } from '../types'
 
 const TYPE_CONFIG: Record<string, { color: string; bg: string }> = {
-  DoS:   { color: '#ff4757', bg: 'rgba(255,71,87,0.12)' },
-  Probe: { color: '#fbbf24', bg: 'rgba(251,191,36,0.12)' },
-  R2L:   { color: '#a78bfa', bg: 'rgba(167,139,250,0.12)' },
-  U2R:   { color: '#60a5fa', bg: 'rgba(96,165,250,0.12)' },
+  DoS:   { color: '#EF4444', bg: 'rgba(239,68,68,0.12)' },
+  Probe: { color: '#F59E0B', bg: 'rgba(245,158,11,0.12)' },
+  R2L:   { color: '#8B5CF6', bg: 'rgba(139,92,246,0.12)' },
+  U2R:   { color: '#3B82F6', bg: 'rgba(59,130,246,0.12)' },
 }
 
 function TierBadge({ tier }: { tier: string }) {
@@ -35,16 +35,16 @@ function ActionCell({ tier }: { tier: string }) {
 
 function LogRow({ ev, isNew }: { ev: AttackEvent; isNew: boolean }) {
   const ts = new Date(ev.timestamp).toISOString().slice(11, 19)
-  const typeCfg = TYPE_CONFIG[ev.attack_type] ?? { color: '#e2e8f0', bg: 'rgba(255,255,255,0.05)' }
+  const typeCfg = TYPE_CONFIG[ev.attack_type] ?? { color: '#0F172A', bg: 'rgba(15,23,42,0.06)' }
   const topFeature = ev.features?.[0]?.name ?? '—'
 
   return (
     <motion.tr
-      initial={isNew ? { opacity: 0, backgroundColor: 'rgba(255,71,87,0.08)' } : false}
+      initial={isNew ? { opacity: 0, backgroundColor: 'rgba(239,68,68,0.08)' } : false}
       animate={{ opacity: 1, backgroundColor: 'rgba(0,0,0,0)' }}
       transition={{ duration: 0.35, ease: 'easeOut' }}
       className="border-b group"
-      style={{ borderColor: 'rgba(255,255,255,0.04)' }}
+      style={{ borderColor: 'rgba(15,23,42,0.05)' }}
     >
       {/* Time */}
       <td className="py-2 px-3 whitespace-nowrap">
@@ -68,7 +68,7 @@ function LogRow({ ev, isNew }: { ev: AttackEvent; isNew: boolean }) {
             className="h-1 rounded-full"
             style={{
               width: 32,
-              background: '#0f1621',
+              background: '#F1F5F9',
               position: 'relative',
               overflow: 'hidden',
             }}
@@ -77,7 +77,7 @@ function LogRow({ ev, isNew }: { ev: AttackEvent; isNew: boolean }) {
               className="absolute inset-y-0 left-0 rounded-full"
               style={{
                 width: `${ev.prob * 100}%`,
-                background: ev.prob > 0.5 ? '#ff4757' : '#00ff88',
+                background: ev.prob > 0.5 ? '#EF4444' : '#10B981',
               }}
             />
           </div>
@@ -125,12 +125,12 @@ export function AttackLog() {
   return (
     <div
       className="glass flex flex-col"
-      style={{ maxHeight: 280, background: 'rgba(10,15,22,0.8)' }}
+      style={{ maxHeight: 280, background: 'rgba(255,255,255,0.75)' }}
     >
       {/* Title row */}
       <div
         className="flex items-center justify-between px-4 py-3 flex-shrink-0"
-        style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}
+        style={{ borderBottom: '1px solid rgba(15,23,42,0.05)' }}
       >
         <div className="flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-neon-red animate-pulse-dot" />
@@ -150,8 +150,8 @@ export function AttackLog() {
           </div>
         ) : (
           <table className="w-full border-collapse">
-            <thead className="sticky top-0 z-10" style={{ background: '#060a0f' }}>
-              <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+            <thead className="sticky top-0 z-10" style={{ background: '#F8FAFC' }}>
+              <tr style={{ borderBottom: '1px solid rgba(15,23,42,0.08)' }}>
                 {HEADERS.map((h) => (
                   <th
                     key={h}

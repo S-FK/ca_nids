@@ -8,7 +8,7 @@ const ATTACK_TYPES = ['DoS', 'Probe', 'R2L', 'U2R'] as const
 type AttackType = typeof ATTACK_TYPES[number]
 
 const TYPE_COLORS: Record<AttackType, string> = {
-  DoS: '#ff4757', Probe: '#fbbf24', R2L: '#a78bfa', U2R: '#60a5fa',
+  DoS: '#EF4444', Probe: '#F59E0B', R2L: '#8B5CF6', U2R: '#3B82F6',
 }
 
 async function apiControl(action: 'start' | 'stop') {
@@ -39,7 +39,7 @@ function StatusCard() {
   const { connected, simRunning, pipelineStatus, totalPackets, packetsPerSec, totalAttacks } = useStore()
 
   return (
-    <div className="glass p-6" style={{ background: 'rgba(10,15,22,0.9)' }}>
+    <div className="glass p-6" style={{ background: 'rgba(255,255,255,0.85)' }}>
       <p className="mono-label mb-4">System Status</p>
 
       {/* Big status indicator */}
@@ -48,8 +48,8 @@ function StatusCard() {
           <div
             className="w-4 h-4 rounded-full"
             style={{
-              background: simRunning ? '#00ff88' : '#334155',
-              boxShadow: simRunning ? '0 0 12px #00ff88' : 'none',
+              background: simRunning ? '#10B981' : '#334155',
+              boxShadow: simRunning ? '0 0 12px #10B981' : 'none',
               animation: simRunning ? 'pulse-dot 2s ease-in-out infinite' : 'none',
             }}
           />
@@ -75,12 +75,12 @@ function StatusCard() {
       {/* Stats row */}
       <div className="grid grid-cols-3 gap-4 mb-6">
         {[
-          { label: 'Packets Processed', value: totalPackets.toLocaleString(), icon: Activity, color: '#60a5fa' },
-          { label: 'Rate',              value: `${packetsPerSec} pkt/s`,       icon: Clock,    color: '#00ff88' },
-          { label: 'Attacks Detected',  value: totalAttacks.toString(),         icon: AlertCircle, color: '#ff4757' },
+          { label: 'Packets Processed', value: totalPackets.toLocaleString(), icon: Activity, color: '#3B82F6' },
+          { label: 'Rate',              value: `${packetsPerSec} pkt/s`,       icon: Clock,    color: '#10B981' },
+          { label: 'Attacks Detected',  value: totalAttacks.toString(),         icon: AlertCircle, color: '#EF4444' },
         ].map(({ label, value, icon: Icon, color }) => (
           <div key={label} className="rounded-xl p-4"
-            style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}>
+            style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.08)' }}>
             <div className="flex items-center gap-2 mb-2">
               <Icon size={13} style={{ color }} />
               <span className="mono-label">{label}</span>
@@ -103,8 +103,8 @@ function StatusCard() {
               : 'text-surface-0 cursor-pointer'
           )}
           style={!(simRunning || !connected) ? {
-            background: 'linear-gradient(135deg, #00ff88, #00d4ff)',
-            boxShadow: '0 0 20px rgba(0,255,136,0.3)',
+            background: 'linear-gradient(135deg, #10B981, #06B6D4)',
+            boxShadow: '0 0 20px rgba(16,185,129,0.3)',
           } : {}}
         >
           <Play size={16} />
@@ -122,9 +122,9 @@ function StatusCard() {
               : 'cursor-pointer'
           )}
           style={simRunning ? {
-            background: 'rgba(255,71,87,0.12)',
-            border: '1px solid rgba(255,71,87,0.4)',
-            color: '#ff4757',
+            background: 'rgba(239,68,68,0.12)',
+            border: '1px solid rgba(239,68,68,0.4)',
+            color: '#EF4444',
           } : {}}
         >
           <Square size={16} />
@@ -147,7 +147,7 @@ function NormalTrafficCard() {
   }
 
   return (
-    <div className="glass p-6 card-accent-blue" style={{ background: 'rgba(10,15,22,0.9)' }}>
+    <div className="glass p-6 card-accent-blue" style={{ background: 'rgba(255,255,255,0.85)' }}>
       <div className="flex items-center gap-2 mb-2">
         <Activity size={16} className="text-neon-blue" />
         <p className="text-sm font-semibold text-ink-0">Normal Traffic</p>
@@ -165,9 +165,9 @@ function NormalTrafficCard() {
             disabled={loading}
             className="px-4 py-2 rounded-lg text-sm font-mono font-semibold transition-all"
             style={{
-              background: 'rgba(96,165,250,0.1)',
-              border: '1px solid rgba(96,165,250,0.25)',
-              color: '#60a5fa',
+              background: 'rgba(59,130,246,0.1)',
+              border: '1px solid rgba(59,130,246,0.25)',
+              color: '#3B82F6',
             }}
           >
             ×{n}
@@ -197,7 +197,7 @@ function MaliciousRequestCard() {
   const color = TYPE_COLORS[type]
 
   return (
-    <div className="glass p-6 card-accent-red" style={{ background: 'rgba(10,15,22,0.9)' }}>
+    <div className="glass p-6 card-accent-red" style={{ background: 'rgba(255,255,255,0.85)' }}>
       <div className="flex items-center gap-2 mb-2">
         <Zap size={16} style={{ color }} />
         <p className="text-sm font-semibold text-ink-0">Malicious Request</p>
@@ -217,8 +217,8 @@ function MaliciousRequestCard() {
                 onClick={() => setType(t)}
                 className="px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all"
                 style={{
-                  background: type === t ? `${TYPE_COLORS[t]}20` : 'rgba(255,255,255,0.03)',
-                  border: `1px solid ${type === t ? TYPE_COLORS[t] + '60' : 'rgba(255,255,255,0.06)'}`,
+                  background: type === t ? `${TYPE_COLORS[t]}20` : 'rgba(15,23,42,0.04)',
+                  border: `1px solid ${type === t ? TYPE_COLORS[t] + '60' : 'rgba(15,23,42,0.08)'}`,
                   color: type === t ? TYPE_COLORS[t] : '#475569',
                 }}
               >
@@ -272,7 +272,7 @@ function DetectionModeCard() {
   }
 
   return (
-    <div className="glass p-6" style={{ background: 'rgba(10,15,22,0.9)' }}>
+    <div className="glass p-6" style={{ background: 'rgba(255,255,255,0.85)' }}>
       <p className="mono-label mb-1">Detection Mode</p>
       <p className="text-xs text-ink-3 mb-5 leading-relaxed">
         Choose which explanation method is used when an attack is detected.
@@ -284,22 +284,22 @@ function DetectionModeCard() {
           onClick={() => select('xnids')}
           className="text-left p-4 rounded-xl transition-all"
           style={{
-            background: detectionMode === 'xnids' ? 'rgba(167,139,250,0.10)' : 'rgba(255,255,255,0.02)',
-            border: `1px solid ${detectionMode === 'xnids' ? 'rgba(167,139,250,0.45)' : 'rgba(255,255,255,0.07)'}`,
-            boxShadow: detectionMode === 'xnids' ? '0 0 16px rgba(167,139,250,0.12)' : 'none',
+            background: detectionMode === 'xnids' ? 'rgba(139,92,246,0.10)' : 'rgba(15,23,42,0.03)',
+            border: `1px solid ${detectionMode === 'xnids' ? 'rgba(139,92,246,0.45)' : 'rgba(15,23,42,0.09)'}`,
+            boxShadow: detectionMode === 'xnids' ? '0 0 16px rgba(139,92,246,0.12)' : 'none',
           }}
         >
           <div className="flex items-center gap-2 mb-2">
-            <FlaskConical size={14} style={{ color: detectionMode === 'xnids' ? '#a78bfa' : '#475569' }} />
-            <span className="font-mono text-sm font-bold" style={{ color: detectionMode === 'xnids' ? '#a78bfa' : '#94a3b8' }}>
+            <FlaskConical size={14} style={{ color: detectionMode === 'xnids' ? '#8B5CF6' : '#475569' }} />
+            <span className="font-mono text-sm font-bold" style={{ color: detectionMode === 'xnids' ? '#8B5CF6' : '#334155' }}>
               xNIDS
             </span>
             <span className="ml-auto text-xs font-mono px-1.5 py-0.5 rounded"
-              style={{ background: 'rgba(167,139,250,0.08)', color: '#a78bfa', border: '1px solid rgba(167,139,250,0.2)' }}>
+              style={{ background: 'rgba(139,92,246,0.08)', color: '#8B5CF6', border: '1px solid rgba(139,92,246,0.2)' }}>
               Paper
             </span>
           </div>
-          <p className="text-xs leading-relaxed" style={{ color: detectionMode === 'xnids' ? '#94a3b8' : '#475569' }}>
+          <p className="text-xs leading-relaxed" style={{ color: detectionMode === 'xnids' ? '#334155' : '#475569' }}>
             Single-run LIME explanation. No confidence score. Rules always auto-deployed.
           </p>
         </button>
@@ -309,22 +309,22 @@ function DetectionModeCard() {
           onClick={() => select('ca_xnids')}
           className="text-left p-4 rounded-xl transition-all"
           style={{
-            background: detectionMode === 'ca_xnids' ? 'rgba(0,255,136,0.08)' : 'rgba(255,255,255,0.02)',
-            border: `1px solid ${detectionMode === 'ca_xnids' ? 'rgba(0,255,136,0.35)' : 'rgba(255,255,255,0.07)'}`,
-            boxShadow: detectionMode === 'ca_xnids' ? '0 0 16px rgba(0,255,136,0.10)' : 'none',
+            background: detectionMode === 'ca_xnids' ? 'rgba(16,185,129,0.08)' : 'rgba(15,23,42,0.03)',
+            border: `1px solid ${detectionMode === 'ca_xnids' ? 'rgba(16,185,129,0.35)' : 'rgba(15,23,42,0.09)'}`,
+            boxShadow: detectionMode === 'ca_xnids' ? '0 0 16px rgba(16,185,129,0.10)' : 'none',
           }}
         >
           <div className="flex items-center gap-2 mb-2">
-            <Cpu size={14} style={{ color: detectionMode === 'ca_xnids' ? '#00ff88' : '#475569' }} />
-            <span className="font-mono text-sm font-bold" style={{ color: detectionMode === 'ca_xnids' ? '#00ff88' : '#94a3b8' }}>
+            <Cpu size={14} style={{ color: detectionMode === 'ca_xnids' ? '#10B981' : '#475569' }} />
+            <span className="font-mono text-sm font-bold" style={{ color: detectionMode === 'ca_xnids' ? '#10B981' : '#334155' }}>
               CA-xNIDS
             </span>
             <span className="ml-auto text-xs font-mono px-1.5 py-0.5 rounded"
-              style={{ background: 'rgba(0,255,136,0.08)', color: '#00ff88', border: '1px solid rgba(0,255,136,0.2)' }}>
+              style={{ background: 'rgba(16,185,129,0.08)', color: '#10B981', border: '1px solid rgba(16,185,129,0.2)' }}>
               Ours
             </span>
           </div>
-          <p className="text-xs leading-relaxed" style={{ color: detectionMode === 'ca_xnids' ? '#94a3b8' : '#475569' }}>
+          <p className="text-xs leading-relaxed" style={{ color: detectionMode === 'ca_xnids' ? '#334155' : '#475569' }}>
             Bootstrap-sampled LIME with confidence score &amp; tiered rule deployment (HIGH/MEDIUM/LOW).
           </p>
         </button>
@@ -337,12 +337,12 @@ function InjectionLog() {
   const log = useStore((s) => s.injectionLog)
 
   return (
-    <div className="glass flex flex-col" style={{ background: 'rgba(10,15,22,0.9)', minHeight: 220 }}>
+    <div className="glass flex flex-col" style={{ background: 'rgba(255,255,255,0.85)', minHeight: 220 }}>
       {/* Terminal header */}
-      <div className="flex items-center gap-2 px-4 py-2.5 border-b border-[rgba(255,255,255,0.06)]"
-        style={{ background: 'rgba(15,22,33,0.6)', borderRadius: '12px 12px 0 0' }}>
+      <div className="flex items-center gap-2 px-4 py-2.5 border-b border-[rgba(15,23,42,0.08)]"
+        style={{ background: 'rgba(255,255,255,0.6)', borderRadius: '12px 12px 0 0' }}>
         <div className="flex items-center gap-1.5 mr-2">
-          {['#ff4757','#fbbf24','#00ff88'].map(c => (
+          {['#EF4444','#F59E0B','#10B981'].map(c => (
             <div key={c} className="w-2.5 h-2.5 rounded-full" style={{ background: c }} />
           ))}
         </div>

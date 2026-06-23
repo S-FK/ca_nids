@@ -37,16 +37,18 @@ export function AlertBanner() {
           animate={{ y: 0, opacity: 1, scaleY: 1 }}
           exit={{ y: -10, opacity: 0, scaleY: 0.9 }}
           transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-          className="w-full glow-red overflow-hidden"
+          className="absolute top-0 left-0 right-0 z-30 w-full glow-red overflow-hidden shadow-2xl"
           style={{
-            background: 'rgba(255,71,87,0.08)',
-            borderBottom: '1px solid rgba(255,71,87,0.25)',
-            borderTop: '1px solid rgba(255,71,87,0.15)',
+            background: 'rgba(254,242,242,0.92)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            borderBottom: '1px solid rgba(239,68,68,0.25)',
+            borderTop: '1px solid rgba(239,68,68,0.15)',
           }}
         >
           <div
-            className="flex items-center gap-3 px-6"
-            style={{ height: 44 }}
+            className="flex items-center gap-3 px-6 flex-wrap"
+            style={{ minHeight: 44 }}
           >
             {/* Pulsing indicator */}
             <div className="relative flex-shrink-0">
@@ -61,7 +63,7 @@ export function AlertBanner() {
             </div>
 
             {/* Warning label */}
-            <span className="mono-label" style={{ color: '#ff4757' }}>
+            <span className="mono-label" style={{ color: '#EF4444' }}>
               ⚠ THREAT DETECTED
             </span>
 
@@ -102,7 +104,7 @@ export function AlertBanner() {
           {/* Animated progress bar (countdown) */}
           <motion.div
             className="h-px"
-            style={{ background: 'linear-gradient(90deg, #ff4757, #ff6b81)' }}
+            style={{ background: 'linear-gradient(90deg, #EF4444, #F87171)' }}
             initial={{ scaleX: 1, transformOrigin: 'left' }}
             animate={{ scaleX: 0, transformOrigin: 'left' }}
             transition={{ duration: 6, ease: 'linear' }}

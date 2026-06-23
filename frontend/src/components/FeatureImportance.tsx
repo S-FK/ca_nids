@@ -3,17 +3,17 @@ import { motion, AnimatePresence } from 'framer-motion'
 import type { Feature } from '../types'
 
 const GROUP_CONFIG: Record<string, { color: string; label: string; gradStart: string; gradEnd: string }> = {
-  basic:        { color: '#60a5fa', label: 'basic',        gradStart: '#60a5fa', gradEnd: '#818cf8' },
-  content:      { color: '#a78bfa', label: 'content',      gradStart: '#a78bfa', gradEnd: '#c084fc' },
-  time_traffic: { color: '#fbbf24', label: 'time/traffic', gradStart: '#fbbf24', gradEnd: '#f59e0b' },
-  host_traffic: { color: '#00ff88', label: 'host/traffic', gradStart: '#00ff88', gradEnd: '#00d4ff' },
+  basic:        { color: '#3B82F6', label: 'basic',        gradStart: '#3B82F6', gradEnd: '#6366F1' },
+  content:      { color: '#8B5CF6', label: 'content',      gradStart: '#8B5CF6', gradEnd: '#C4B5FD' },
+  time_traffic: { color: '#F59E0B', label: 'time/traffic', gradStart: '#F59E0B', gradEnd: '#D97706' },
+  host_traffic: { color: '#10B981', label: 'host/traffic', gradStart: '#10B981', gradEnd: '#06B6D4' },
 }
 
 const TYPE_COLORS: Record<string, string> = {
-  DoS:   '#ff4757',
-  Probe: '#fbbf24',
-  R2L:   '#a78bfa',
-  U2R:   '#60a5fa',
+  DoS:   '#EF4444',
+  Probe: '#F59E0B',
+  R2L:   '#8B5CF6',
+  U2R:   '#3B82F6',
 }
 
 interface BarRowProps {
@@ -23,7 +23,7 @@ interface BarRowProps {
 }
 
 function BarRow({ feature, rank, maxImportance }: BarRowProps) {
-  const cfg = GROUP_CONFIG[feature.group] ?? { color: '#64748b', gradStart: '#64748b', gradEnd: '#475569', label: 'other' }
+  const cfg = GROUP_CONFIG[feature.group] ?? { color: 'var(--text-tertiary)', gradStart: 'var(--text-tertiary)', gradEnd: 'var(--text-tertiary)', label: 'other' }
   const pct = maxImportance > 0 ? (feature.importance / maxImportance) * 100 : 0
   const stdPct = maxImportance > 0 ? ((feature.importance + feature.std) / maxImportance) * 100 : 0
 
@@ -76,7 +76,7 @@ function BarRow({ feature, rank, maxImportance }: BarRowProps) {
         {/* Track */}
         <div
           className="absolute inset-0 rounded-full"
-          style={{ background: '#0f1621', zIndex: -1 }}
+          style={{ background: 'var(--surface-2)', zIndex: -1 }}
         />
       </div>
 
@@ -101,10 +101,10 @@ function SkeletonRow({ i }: { i: number }) {
   return (
     <div className="flex items-center gap-3" style={{ opacity: 0.15 + i * 0.05 }}>
       <span className="mono-label w-4 text-right text-ink-4">{i + 1}</span>
-      <div className="h-2 rounded flex-shrink-0" style={{ width: 130, background: '#0f1621' }} />
-      <div className="flex-1 h-1.5 rounded-full" style={{ background: '#0f1621' }} />
-      <div className="h-2 rounded" style={{ width: 36, background: '#0f1621' }} />
-      <div className="w-1.5 h-1.5 rounded-full" style={{ background: '#0f1621' }} />
+      <div className="h-2 rounded flex-shrink-0" style={{ width: 130, background: 'var(--surface-2)' }} />
+      <div className="flex-1 h-1.5 rounded-full" style={{ background: 'var(--surface-2)' }} />
+      <div className="h-2 rounded" style={{ width: 36, background: 'var(--surface-2)' }} />
+      <div className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--surface-2)' }} />
     </div>
   )
 }
@@ -117,12 +117,12 @@ export function FeatureImportance() {
     : []
 
   const maxImportance = data[0]?.importance ?? 1
-  const attackColor = latest ? (TYPE_COLORS[latest.attack_type] ?? '#e2e8f0') : '#475569'
+  const attackColor = latest ? (TYPE_COLORS[latest.attack_type] ?? 'var(--text-primary)') : 'var(--text-tertiary)'
 
   return (
     <div
       className="glass h-full flex flex-col p-4 relative"
-      style={{ background: 'rgba(10,15,22,0.8)' }}
+      style={{ background: 'var(--surface-card-translucent-2)' }}
     >
       {/* Title row */}
       <div className="flex items-center justify-between mb-3 flex-shrink-0">

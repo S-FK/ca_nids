@@ -4,16 +4,16 @@ import { motion, AnimatePresence } from 'framer-motion'
 import type { AttackEvent } from '../types'
 
 const TIER_COLORS: Record<string, string> = {
-  HIGH:   '#00ff88',
-  MEDIUM: '#fbbf24',
-  LOW:    '#ff4757',
+  HIGH:   '#10B981',
+  MEDIUM: '#F59E0B',
+  LOW:    '#EF4444',
 }
 
 const TYPE_COLORS: Record<string, string> = {
-  DoS:   '#ff4757',
-  Probe: '#fbbf24',
-  R2L:   '#a78bfa',
-  U2R:   '#60a5fa',
+  DoS:   '#EF4444',
+  Probe: '#F59E0B',
+  R2L:   '#8B5CF6',
+  U2R:   '#3B82F6',
 }
 
 function TierBadgeInline({ tier }: { tier: string }) {
@@ -25,8 +25,8 @@ function TierBadgeInline({ tier }: { tier: string }) {
 }
 
 function RuleBlock({ ev }: { ev: AttackEvent }) {
-  const tierColor = TIER_COLORS[ev.tier] ?? '#475569'
-  const typeColor = TYPE_COLORS[ev.attack_type] ?? '#e2e8f0'
+  const tierColor = TIER_COLORS[ev.tier] ?? 'var(--text-tertiary)'
+  const typeColor = TYPE_COLORS[ev.attack_type] ?? 'var(--text-primary)'
   const ts = new Date(ev.timestamp).toISOString().slice(11, 19)
 
   return (
@@ -44,7 +44,7 @@ function RuleBlock({ ev }: { ev: AttackEvent }) {
     >
       {/* Header line */}
       <div className="flex items-center gap-2 mb-1 flex-wrap">
-        <span className="font-mono text-xs" style={{ color: '#00ff88' }}>
+        <span className="font-mono text-xs" style={{ color: '#10B981' }}>
           [{ts}]
         </span>
         <TierBadgeInline tier={ev.tier} />
@@ -96,22 +96,22 @@ export function DefenceRules() {
   return (
     <div
       className="glass flex flex-col"
-      style={{ maxHeight: 260, background: '#060a0f' }}
+      style={{ maxHeight: 260, background: 'var(--surface-base)' }}
     >
       {/* Terminal title bar */}
       <div
         className="flex items-center gap-2 px-4 py-2.5 flex-shrink-0"
         style={{
-          borderBottom: '1px solid rgba(255,255,255,0.06)',
-          background: 'rgba(15,22,33,0.6)',
+          borderBottom: '1px solid rgba(var(--ink-rgb),0.08)',
+          background: 'var(--surface-card-translucent-3)',
           borderRadius: '12px 12px 0 0',
         }}
       >
         {/* Traffic lights */}
         <div className="flex items-center gap-1.5 mr-2">
-          <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#ff4757' }} />
-          <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#fbbf24' }} />
-          <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#00ff88' }} />
+          <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#EF4444' }} />
+          <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#F59E0B' }} />
+          <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#10B981' }} />
         </div>
         <Terminal size={12} className="text-ink-3" />
         <span className="mono-label">Defence Rule Engine</span>
@@ -123,7 +123,7 @@ export function DefenceRules() {
       {/* Terminal body */}
       <div
         className="overflow-auto flex-1 p-4 font-mono"
-        style={{ background: '#060a0f' }}
+        style={{ background: 'var(--surface-base)' }}
       >
         {/* Prompt prefix */}
         <div className="flex items-center gap-1 mb-3">

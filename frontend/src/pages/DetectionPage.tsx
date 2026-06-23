@@ -6,10 +6,10 @@ import { clsx } from 'clsx'
 import { ShieldCheck, ShieldAlert, ChevronRight, Lock, Radio, Server, Cpu, Network, BarChart3 } from 'lucide-react'
 
 const TYPE_COLORS: Record<string, string> = {
-  DoS: '#ff4757', Probe: '#fbbf24', R2L: '#a78bfa', U2R: '#60a5fa',
+  DoS: '#EF4444', Probe: '#F59E0B', R2L: '#8B5CF6', U2R: '#3B82F6',
 }
 const GROUP_COLORS: Record<string, string> = {
-  basic: '#60a5fa', content: '#a78bfa', time_traffic: '#fbbf24', host_traffic: '#00ff88',
+  basic: '#3B82F6', content: '#8B5CF6', time_traffic: '#F59E0B', host_traffic: '#10B981',
 }
 
 // KDD99 feature groups (mirrors src/data_loader.py FEATURE_GROUPS)
@@ -34,7 +34,7 @@ function PacketRow({ pkt, isSelected, onClick }: {
   pkt: PacketEntry; isSelected: boolean; onClick: () => void
 }) {
   const ts = pkt.timestamp ? new Date(pkt.timestamp).toISOString().slice(11, 23) : '—'
-  const typeColor = pkt.attack_type ? (TYPE_COLORS[pkt.attack_type] ?? '#e2e8f0') : '#00ff88'
+  const typeColor = pkt.attack_type ? (TYPE_COLORS[pkt.attack_type] ?? 'var(--text-primary)') : '#10B981'
 
   return (
     <motion.div
@@ -44,18 +44,18 @@ function PacketRow({ pkt, isSelected, onClick }: {
       transition={{ duration: 0.15 }}
       onClick={onClick}
       className={clsx(
-        'flex items-center gap-3 px-4 py-2.5 cursor-pointer transition-all border-b border-[rgba(255,255,255,0.04)] last:border-0',
+        'flex items-center gap-3 px-4 py-2.5 cursor-pointer transition-all border-b border-[rgba(var(--ink-rgb),0.05)] last:border-0',
         isSelected
-          ? 'bg-[rgba(255,255,255,0.06)]'
+          ? 'bg-[rgba(var(--ink-rgb),0.08)]'
           : pkt.is_attack
-            ? 'hover:bg-[rgba(255,71,87,0.06)]'
-            : 'hover:bg-[rgba(255,255,255,0.02)]',
+            ? 'hover:bg-[rgba(239,68,68,0.06)]'
+            : 'hover:bg-[rgba(var(--ink-rgb),0.03)]',
       )}
     >
       <div className="flex-shrink-0 w-4 flex items-center justify-center">
         {pkt.is_attack
-          ? <ShieldAlert size={13} style={{ color: '#ff4757' }} />
-          : <ShieldCheck size={13} style={{ color: '#00ff8860' }} />}
+          ? <ShieldAlert size={13} style={{ color: '#EF4444' }} />
+          : <ShieldCheck size={13} style={{ color: '#10B98160' }} />}
       </div>
       <span className="font-mono text-[11px] text-ink-3 flex-shrink-0 w-28">{ts}</span>
       <span className="font-mono text-xs font-bold flex-shrink-0 w-14" style={{ color: typeColor }}>
@@ -65,7 +65,7 @@ function PacketRow({ pkt, isSelected, onClick }: {
         <div className="flex-1 h-1 rounded-full bg-surface-2 overflow-hidden">
           <div className="h-full rounded-full" style={{
             width: `${pkt.prob * 100}%`,
-            background: pkt.is_attack ? 'linear-gradient(90deg,#ff4757,#ff6b81)' : 'linear-gradient(90deg,#00ff8840,#00ff8820)',
+            background: pkt.is_attack ? 'linear-gradient(90deg,#EF4444,#F87171)' : 'linear-gradient(90deg,#10B98140,#10B98120)',
           }} />
         </div>
         <span className="font-mono text-[10px] text-ink-3 w-10 text-right">
@@ -73,7 +73,7 @@ function PacketRow({ pkt, isSelected, onClick }: {
         </span>
       </div>
       {pkt.tier && <TierBadge tier={pkt.tier} />}
-      {pkt.source === 'manual' && <span className="mono-label" style={{ color: '#60a5fa' }}>MANUAL</span>}
+      {pkt.source === 'manual' && <span className="mono-label" style={{ color: '#3B82F6' }}>MANUAL</span>}
       {pkt.is_attack && (
         <ChevronRight size={12} className={clsx('text-ink-4 transition-transform flex-shrink-0', isSelected && 'rotate-90')} />
       )}
@@ -90,11 +90,11 @@ function PacketInspector({ pkt }: { pkt: PacketEntry }) {
   return (
     <motion.div key={`inspector-${pkt.packet_id}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="h-full overflow-y-auto p-5 space-y-4">
       {/* Packet identity row */}
-      <div className="rounded-xl p-4" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}>
+      <div className="rounded-xl p-4" style={{ background: 'rgba(var(--ink-rgb),0.03)', border: '1px solid rgba(var(--ink-rgb),0.08)' }}>
         <div className="flex items-center gap-3 mb-3">
           {pkt.is_attack
-            ? <ShieldAlert size={16} style={{ color: TYPE_COLORS[pkt.attack_type ?? ''] ?? '#ff4757' }} />
-            : <ShieldCheck size={16} style={{ color: '#00ff88' }} />}
+            ? <ShieldAlert size={16} style={{ color: TYPE_COLORS[pkt.attack_type ?? ''] ?? '#EF4444' }} />
+            : <ShieldCheck size={16} style={{ color: '#10B981' }} />}
           <span className="font-mono text-sm font-bold text-ink-0">
             Packet #{pkt.packet_id}
           </span>
@@ -104,9 +104,9 @@ function PacketInspector({ pkt }: { pkt: PacketEntry }) {
         </div>
         <div className="grid grid-cols-3 gap-3">
           {[
-            { label: 'Classification', value: pkt.is_attack ? (pkt.attack_type ?? 'ATTACK') : 'NORMAL', color: pkt.is_attack ? (TYPE_COLORS[pkt.attack_type ?? ''] ?? '#ff4757') : '#00ff88' },
-            { label: 'Anomaly Prob', value: `${(pkt.prob * 100).toFixed(2)}%`, color: pkt.is_attack ? '#ff4757' : '#00ff88' },
-            { label: 'Source', value: pkt.source === 'manual' ? 'INJECTED' : 'AUTO-SIM', color: pkt.source === 'manual' ? '#60a5fa' : '#64748b' },
+            { label: 'Classification', value: pkt.is_attack ? (pkt.attack_type ?? 'ATTACK') : 'NORMAL', color: pkt.is_attack ? (TYPE_COLORS[pkt.attack_type ?? ''] ?? '#EF4444') : '#10B981' },
+            { label: 'Anomaly Prob', value: `${(pkt.prob * 100).toFixed(2)}%`, color: pkt.is_attack ? '#EF4444' : '#10B981' },
+            { label: 'Source', value: pkt.source === 'manual' ? 'INJECTED' : 'AUTO-SIM', color: pkt.source === 'manual' ? '#3B82F6' : 'var(--text-tertiary)' },
           ].map(({ label, value, color }) => (
             <div key={label}>
               <p className="mono-label mb-0.5">{label}</p>
@@ -119,21 +119,21 @@ function PacketInspector({ pkt }: { pkt: PacketEntry }) {
       {/* Feature groups */}
       {(Object.entries(FEATURE_GROUPS) as [string, string[]][]).map(([group, names]) => {
         const Icon = GROUP_ICONS[group as keyof typeof GROUP_ICONS] ?? Network
-        const gc = GROUP_COLORS[group] ?? '#64748b'
+        const gc = GROUP_COLORS[group] ?? 'var(--text-tertiary)'
         const groupFeatures = names.filter((n) => rf[n] !== undefined)
         if (groupFeatures.length === 0) return null
 
         return (
-          <div key={group} className="rounded-xl overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.06)' }}>
+          <div key={group} className="rounded-xl overflow-hidden" style={{ border: '1px solid rgba(var(--ink-rgb),0.08)' }}>
             {/* Group header */}
-            <div className="flex items-center gap-2 px-4 py-2.5" style={{ background: `${gc}12`, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+            <div className="flex items-center gap-2 px-4 py-2.5" style={{ background: `${gc}12`, borderBottom: '1px solid rgba(var(--ink-rgb),0.06)' }}>
               <Icon size={13} style={{ color: gc }} />
               <span className="font-mono text-xs font-bold" style={{ color: gc }}>{GROUP_LABELS[group]}</span>
               <span className="mono-label ml-auto">{groupFeatures.length} features</span>
             </div>
 
             {/* Feature rows */}
-            <div className="divide-y divide-[rgba(255,255,255,0.03)]">
+            <div className="divide-y divide-[rgba(var(--ink-rgb),0.04)]">
               {groupFeatures.map((name) => {
                 const val = rf[name] ?? 0
                 const isKey = importantNames.has(name)
@@ -143,11 +143,11 @@ function PacketInspector({ pkt }: { pkt: PacketEntry }) {
                 return (
                   <div key={name} className={clsx(
                     'flex items-center gap-3 px-4 py-2 transition-colors',
-                    isKey && 'bg-[rgba(255,71,87,0.04)]'
+                    isKey && 'bg-[rgba(239,68,68,0.04)]'
                   )}>
                     {/* Key indicator */}
                     <div className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                      style={{ background: isKey ? '#ff4757' : 'rgba(255,255,255,0.08)' }} />
+                      style={{ background: isKey ? '#EF4444' : 'rgba(var(--ink-rgb),0.1)' }} />
 
                     {/* Feature name */}
                     <span className={clsx(
@@ -160,7 +160,7 @@ function PacketInspector({ pkt }: { pkt: PacketEntry }) {
                     {/* Value bar */}
                     <div className="flex-1 h-1 rounded-full bg-surface-2 overflow-hidden">
                       <div className="h-full rounded-full transition-all"
-                        style={{ width: `${barPct}%`, background: isKey ? '#ff4757' : gc + '60' }} />
+                        style={{ width: `${barPct}%`, background: isKey ? '#EF4444' : gc + '60' }} />
                     </div>
 
                     {/* Raw value */}
@@ -186,14 +186,14 @@ function PacketInspector({ pkt }: { pkt: PacketEntry }) {
 // ── Analysis Panel ─────────────────────────────────────────────────────────────
 
 function AnalysisPanel({ pkt }: { pkt: PacketEntry }) {
-  const typeColor = pkt.attack_type ? (TYPE_COLORS[pkt.attack_type] ?? '#e2e8f0') : '#e2e8f0'
-  const tierColor = pkt.tier === 'HIGH' ? '#00ff88' : pkt.tier === 'MEDIUM' ? '#fbbf24' : '#ff4757'
+  const typeColor = pkt.attack_type ? (TYPE_COLORS[pkt.attack_type] ?? 'var(--text-primary)') : 'var(--text-primary)'
+  const tierColor = pkt.tier === 'HIGH' ? '#10B981' : pkt.tier === 'MEDIUM' ? '#F59E0B' : '#EF4444'
   const sorted = [...(pkt.features ?? [])].sort((a, b) => b.importance - a.importance).slice(0, 8)
   const maxImp = sorted[0]?.importance ?? 1
 
   return (
     <motion.div key={`analysis-${pkt.packet_id}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="h-full overflow-y-auto">
-      <div className="p-5 border-b border-[rgba(255,255,255,0.06)]" style={{ background: `${typeColor}08` }}>
+      <div className="p-5 border-b border-[rgba(var(--ink-rgb),0.08)]" style={{ background: `${typeColor}08` }}>
         <div className="flex items-center gap-3 mb-1">
           <ShieldAlert size={18} style={{ color: typeColor }} />
           <span className="font-bold text-lg" style={{ color: typeColor }}>{pkt.attack_type}</span>
@@ -221,11 +221,11 @@ function AnalysisPanel({ pkt }: { pkt: PacketEntry }) {
       </div>
 
       {sorted.length > 0 && (
-        <div className="p-5 border-b border-[rgba(255,255,255,0.06)]">
+        <div className="p-5 border-b border-[rgba(var(--ink-rgb),0.08)]">
           <p className="mono-label mb-4">xNIDS Feature Attribution</p>
           <div className="space-y-3">
             {sorted.map((f, i) => {
-              const gc = GROUP_COLORS[f.group] ?? '#64748b'
+              const gc = GROUP_COLORS[f.group] ?? 'var(--text-tertiary)'
               const pct = (f.importance / maxImp) * 100
               return (
                 <div key={f.name} className="flex items-center gap-3">
@@ -253,20 +253,20 @@ function AnalysisPanel({ pkt }: { pkt: PacketEntry }) {
         <p className="mono-label mb-3">Generated Defence Rule</p>
         {pkt.tier === 'LOW' ? (
           <div className="rounded-xl p-4 text-xs font-mono"
-            style={{ background: 'rgba(255,71,87,0.06)', border: '1px solid rgba(255,71,87,0.2)' }}>
+            style={{ background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.2)' }}>
             <p className="text-neon-red font-bold mb-1">Rule Not Generated</p>
             <p className="text-ink-2">CA-xNIDS confidence ({((pkt.confidence ?? 0) * 100).toFixed(0)}%) below deployment threshold. Manual investigation required.</p>
           </div>
         ) : (
           <div className="space-y-2 text-xs font-mono">
             {pkt.iptables_rule && (
-              <div className="rounded-xl p-3" style={{ background: 'rgba(96,165,250,0.06)', border: '1px solid rgba(96,165,250,0.15)' }}>
+              <div className="rounded-xl p-3" style={{ background: 'rgba(59,130,246,0.06)', border: '1px solid rgba(59,130,246,0.15)' }}>
                 <span className="text-neon-blue">$ iptables: </span>
                 <span className="text-ink-1 break-all">{pkt.iptables_rule}</span>
               </div>
             )}
             {pkt.tier === 'HIGH' && pkt.openflow_rule && (
-              <div className="rounded-xl p-3" style={{ background: 'rgba(167,139,250,0.06)', border: '1px solid rgba(167,139,250,0.15)' }}>
+              <div className="rounded-xl p-3" style={{ background: 'rgba(139,92,246,0.06)', border: '1px solid rgba(139,92,246,0.15)' }}>
                 <span className="text-neon-purple">$ openflow: </span>
                 <span className="text-ink-1 break-all">{pkt.openflow_rule}</span>
               </div>
@@ -323,7 +323,7 @@ export function DetectionPage() {
   return (
     <div className="flex flex-col h-full">
       {/* Page header */}
-      <div className="px-6 py-4 border-b border-[rgba(255,255,255,0.06)] flex items-center gap-6 flex-shrink-0">
+      <div className="px-6 py-4 border-b border-[rgba(var(--ink-rgb),0.08)] flex items-center gap-6 flex-shrink-0">
         <div>
           <h1 className="text-lg font-bold text-ink-0">Live Detection Feed</h1>
           <p className="mono-label mt-0.5">Real-time packet analysis with xNIDS explanation</p>
@@ -331,15 +331,15 @@ export function DetectionPage() {
         <div className="flex items-center gap-4 ml-auto text-xs font-mono">
           <span className="text-ink-3">Total <span className="text-ink-1">{stats.total}</span></span>
           <span className="text-neon-green">Normal <span>{stats.normal}</span></span>
-          <span style={{ color: '#ff4757' }}>Attacks <span className="font-bold">{stats.attacks}</span></span>
+          <span style={{ color: '#EF4444' }}>Attacks <span className="font-bold">{stats.attacks}</span></span>
 
           {/* Live / Lock toggle */}
           <button
             onClick={() => setLive((v) => !v)}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
             style={live
-              ? { background: 'rgba(0,255,136,0.1)', border: '1px solid rgba(0,255,136,0.3)', color: '#00ff88' }
-              : { background: 'rgba(96,165,250,0.08)', border: '1px solid rgba(96,165,250,0.25)', color: '#60a5fa' }
+              ? { background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.3)', color: '#10B981' }
+              : { background: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.25)', color: '#3B82F6' }
             }
           >
             {live ? <Radio size={11} /> : <Lock size={11} />}
@@ -348,9 +348,9 @@ export function DetectionPage() {
 
           <div className="flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full"
-              style={{ background: simRunning ? '#00ff88' : '#ff4757',
+              style={{ background: simRunning ? '#10B981' : '#EF4444',
                        animation: simRunning ? 'pulse-dot 2s ease-in-out infinite' : 'none' }} />
-            <span style={{ color: simRunning ? '#00ff88' : '#ff4757' }}>
+            <span style={{ color: simRunning ? '#10B981' : '#EF4444' }}>
               {simRunning ? 'MONITORING' : 'STOPPED'}
             </span>
           </div>
@@ -360,9 +360,9 @@ export function DetectionPage() {
       {/* Split view */}
       <div className="flex flex-1 min-h-0">
         {/* Left: packet stream */}
-        <div className="flex flex-col border-r border-[rgba(255,255,255,0.06)] overflow-hidden" style={{ width: '40%', flexShrink: 0 }}>
-          <div className="px-4 py-2 border-b border-[rgba(255,255,255,0.06)] flex items-center gap-3"
-            style={{ background: 'rgba(10,15,22,0.8)', flexShrink: 0 }}>
+        <div className="flex flex-col border-r border-[rgba(var(--ink-rgb),0.08)] overflow-hidden" style={{ width: '40%', flexShrink: 0 }}>
+          <div className="px-4 py-2 border-b border-[rgba(var(--ink-rgb),0.08)] flex items-center gap-3"
+            style={{ background: 'var(--surface-card-translucent-2)', flexShrink: 0 }}>
             <div className="w-4" />
             <span className="mono-label w-28">Timestamp</span>
             <span className="mono-label w-14">Type</span>
@@ -395,7 +395,7 @@ export function DetectionPage() {
           {selected ? (
             <>
               {/* Tabs */}
-              <div className="flex border-b border-[rgba(255,255,255,0.06)] flex-shrink-0"
+              <div className="flex border-b border-[rgba(var(--ink-rgb),0.08)] flex-shrink-0"
                 style={{ background: 'rgba(10,15,22,0.6)' }}>
                 {([
                   { id: 'analysis', label: 'xNIDS Analysis', icon: ShieldAlert },

@@ -22,7 +22,7 @@ function InitScreen() {
   return (
     <motion.div
       className="fixed inset-0 flex flex-col items-center justify-center gap-8 z-50 bg-grid"
-      style={{ background: '#060a0f' }}
+      style={{ background: 'var(--surface-base)' }}
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
     >
       <div className="relative w-28 h-28 flex items-center justify-center">
@@ -32,7 +32,7 @@ function InitScreen() {
           <defs>
             <filter id="ig"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
             <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#00ff88"/><stop offset="100%" stopColor="#00d4ff"/>
+              <stop offset="0%" stopColor="#10B981"/><stop offset="100%" stopColor="#06B6D4"/>
             </linearGradient>
           </defs>
           <path d="M40 6 L66 16 L66 40 C66 54 54 64 40 70 C26 64 14 54 14 40 L14 16 Z"
@@ -51,7 +51,7 @@ function InitScreen() {
         <p className="mono-label mt-2">{label}</p>
       </div>
       <div className="w-72 h-px bg-surface-3 rounded-full overflow-hidden">
-        <div className="h-full rounded-full" style={{ background: 'linear-gradient(90deg,#00ff88,#00d4ff)', animation: 'indeterminate 1.6s ease-in-out infinite' }} />
+        <div className="h-full rounded-full" style={{ background: 'linear-gradient(90deg,#10B981,#06B6D4)', animation: 'indeterminate 1.6s ease-in-out infinite' }} />
       </div>
       <style>{`
         @keyframes dash{from{stroke-dashoffset:180}to{stroke-dashoffset:0}}
@@ -72,16 +72,18 @@ function Shell() {
       <Sidebar />
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <Header />
-        <AlertBanner />
-        <main className="flex-1 overflow-y-auto">
-          <Routes>
-            <Route path="/"          element={<DashboardPage />} />
-            <Route path="/control"   element={<ControlPage />} />
-            <Route path="/attacks"   element={<AttacksPage />} />
-            <Route path="/detection" element={<DetectionPage />} />
-            <Route path="/threats"   element={<ThreatsPage />} />
-          </Routes>
-        </main>
+        <div className="relative flex-1 min-h-0">
+          <AlertBanner />
+          <main className="h-full overflow-y-auto">
+            <Routes>
+              <Route path="/"          element={<DashboardPage />} />
+              <Route path="/control"   element={<ControlPage />} />
+              <Route path="/attacks"   element={<AttacksPage />} />
+              <Route path="/detection" element={<DetectionPage />} />
+              <Route path="/threats"   element={<ThreatsPage />} />
+            </Routes>
+          </main>
+        </div>
       </div>
     </div>
   )

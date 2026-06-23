@@ -31,27 +31,27 @@ const TIER_CONFIG: Record<Tier, {
   badgeClass: string
 }> = {
   HIGH: {
-    color: '#00ff88',
+    color: '#10B981',
     gradId: 'gaugeGradHigh',
-    gradStart: '#00ff88',
-    gradEnd: '#00d4ff',
-    bg: 'rgba(0,255,136,0.04)',
+    gradStart: '#10B981',
+    gradEnd: '#06B6D4',
+    bg: 'rgba(16,185,129,0.04)',
     badgeClass: 'badge-high',
   },
   MEDIUM: {
-    color: '#fbbf24',
+    color: '#F59E0B',
     gradId: 'gaugeGradMed',
-    gradStart: '#fbbf24',
-    gradEnd: '#f59e0b',
-    bg: 'rgba(251,191,36,0.04)',
+    gradStart: '#F59E0B',
+    gradEnd: '#D97706',
+    bg: 'rgba(245,158,11,0.04)',
     badgeClass: 'badge-medium',
   },
   LOW: {
-    color: '#ff4757',
+    color: '#EF4444',
     gradId: 'gaugeGradLow',
-    gradStart: '#ff4757',
-    gradEnd: '#ff6b81',
-    bg: 'rgba(255,71,87,0.04)',
+    gradStart: '#EF4444',
+    gradEnd: '#F87171',
+    bg: 'rgba(239,68,68,0.04)',
     badgeClass: 'badge-low',
   },
 }
@@ -113,7 +113,7 @@ export function ConfidenceGauge() {
   return (
     <div
       className="glass h-full flex flex-col"
-      style={{ background: hasData ? cfg.bg : 'rgba(10,15,22,0.8)' }}
+      style={{ background: hasData ? cfg.bg : 'var(--surface-card-translucent-2)' }}
     >
       <div className="p-4 flex flex-col items-center h-full">
         {/* Title */}
@@ -150,7 +150,7 @@ export function ConfidenceGauge() {
             <circle
               cx={CX} cy={CY} r={R_OUTER}
               fill="none"
-              stroke="rgba(255,255,255,0.04)"
+              stroke="rgba(var(--ink-rgb),0.05)"
               strokeWidth={1}
               strokeDasharray="3 4"
             />
@@ -176,7 +176,7 @@ export function ConfidenceGauge() {
             <path
               d={arcPath(CX, CY, R_TRACK, START_DEG, START_DEG + SWEEP)}
               fill="none"
-              stroke="#0f1621"
+              stroke="var(--surface-2)"
               strokeWidth={16}
               strokeLinecap="round"
             />
@@ -216,7 +216,7 @@ export function ConfidenceGauge() {
                   <text
                     x={CX} y={CY + 10}
                     textAnchor="middle"
-                    fill="#475569"
+                    fill="var(--text-tertiary)"
                     fontSize={9}
                     fontFamily="JetBrains Mono, monospace"
                     letterSpacing={2}
@@ -229,7 +229,7 @@ export function ConfidenceGauge() {
                   <text
                     x={CX} y={CY - 4}
                     textAnchor="middle"
-                    fill="#334155"
+                    fill="var(--text-secondary)"
                     fontSize={28}
                     fontWeight={700}
                     fontFamily="JetBrains Mono, monospace"
@@ -239,7 +239,7 @@ export function ConfidenceGauge() {
                   <text
                     x={CX} y={CY + 12}
                     textAnchor="middle"
-                    fill="#334155"
+                    fill="var(--text-secondary)"
                     fontSize={9}
                     fontFamily="JetBrains Mono, monospace"
                     letterSpacing={2}
@@ -260,7 +260,7 @@ export function ConfidenceGauge() {
                   x={pos.x} y={pos.y}
                   textAnchor="middle"
                   dominantBaseline="middle"
-                  fill="#334155"
+                  fill="var(--text-secondary)"
                   fontSize={7}
                   fontFamily="JetBrains Mono, monospace"
                 >
@@ -274,15 +274,15 @@ export function ConfidenceGauge() {
         {/* Tier breakdown table */}
         <div className="w-full space-y-1 flex-shrink-0">
           {([
-            ['HIGH',   '≥ 75%', 'Auto-deploy rule',   '#00ff88'],
-            ['MEDIUM', '≥ 50%', 'Operator review',    '#fbbf24'],
-            ['LOW',    '< 50%', 'Manual analysis',    '#ff4757'],
+            ['HIGH',   '≥ 75%', 'Auto-deploy rule',   '#10B981'],
+            ['MEDIUM', '≥ 50%', 'Operator review',    '#F59E0B'],
+            ['LOW',    '< 50%', 'Manual analysis',    '#EF4444'],
           ] as const).map(([t, thresh, action, color]) => (
             <div
               key={t}
               className="flex items-center justify-between px-2 py-1 rounded transition-all duration-300"
               style={{
-                background: (hasData && tier === t) ? 'rgba(255,255,255,0.03)' : 'transparent',
+                background: (hasData && tier === t) ? 'rgba(var(--ink-rgb),0.04)' : 'transparent',
                 opacity: (hasData && tier !== t) ? 0.35 : 1,
               }}
             >

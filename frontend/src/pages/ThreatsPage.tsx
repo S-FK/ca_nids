@@ -6,14 +6,14 @@ import { clsx } from 'clsx'
 import { ShieldAlert, ChevronDown, ChevronUp, Filter } from 'lucide-react'
 
 const TYPE_COLORS: Record<string, string> = {
-  DoS: '#ff4757', Probe: '#fbbf24', R2L: '#a78bfa', U2R: '#60a5fa',
+  DoS: '#EF4444', Probe: '#F59E0B', R2L: '#8B5CF6', U2R: '#3B82F6',
 }
 const TYPE_BG: Record<string, string> = {
-  DoS: 'rgba(255,71,87,0.08)', Probe: 'rgba(251,191,36,0.08)',
-  R2L: 'rgba(167,139,250,0.08)', U2R: 'rgba(96,165,250,0.08)',
+  DoS: 'rgba(239,68,68,0.08)', Probe: 'rgba(245,158,11,0.08)',
+  R2L: 'rgba(139,92,246,0.08)', U2R: 'rgba(59,130,246,0.08)',
 }
 const GROUP_COLORS: Record<string, string> = {
-  basic: '#60a5fa', content: '#a78bfa', time_traffic: '#fbbf24', host_traffic: '#00ff88',
+  basic: '#3B82F6', content: '#8B5CF6', time_traffic: '#F59E0B', host_traffic: '#10B981',
 }
 
 const ATTACK_TYPES = ['DoS', 'Probe', 'R2L', 'U2R'] as const
@@ -25,10 +25,10 @@ function TierBadge({ tier }: { tier: string }) {
 
 function ThreatCard({ pkt }: { pkt: PacketEntry }) {
   const [expanded, setExpanded] = useState(false)
-  const typeColor = TYPE_COLORS[pkt.attack_type ?? ''] ?? '#ff4757'
-  const typeBg    = TYPE_BG[pkt.attack_type ?? ''] ?? 'rgba(255,71,87,0.06)'
+  const typeColor = TYPE_COLORS[pkt.attack_type ?? ''] ?? '#EF4444'
+  const typeBg    = TYPE_BG[pkt.attack_type ?? ''] ?? 'rgba(239,68,68,0.06)'
   const ts        = new Date(pkt.timestamp).toISOString().slice(0, 23).replace('T', ' ')
-  const tierColor = pkt.tier === 'HIGH' ? '#00ff88' : pkt.tier === 'MEDIUM' ? '#fbbf24' : '#ff4757'
+  const tierColor = pkt.tier === 'HIGH' ? '#10B981' : pkt.tier === 'MEDIUM' ? '#F59E0B' : '#EF4444'
   const topFeats  = (pkt.features ?? []).slice(0, 3).map((f) => f.name)
   const sorted    = [...(pkt.features ?? [])].sort((a, b) => b.importance - a.importance).slice(0, 8)
   const maxImp    = sorted[0]?.importance ?? 1
@@ -41,13 +41,13 @@ function ThreatCard({ pkt }: { pkt: PacketEntry }) {
       transition={{ duration: 0.2 }}
       className="glass overflow-hidden"
       style={{
-        background: 'rgba(10,15,22,0.9)',
+        background: 'var(--surface-card-translucent)',
         borderLeft: `2px solid ${typeColor}`,
       }}
     >
       {/* Summary row */}
       <div
-        className="flex items-center gap-4 px-5 py-3.5 cursor-pointer transition-colors hover:bg-[rgba(255,255,255,0.02)]"
+        className="flex items-center gap-4 px-5 py-3.5 cursor-pointer transition-colors hover:bg-[rgba(var(--ink-rgb),0.03)]"
         onClick={() => setExpanded((v) => !v)}
       >
         {/* Type badge */}
@@ -84,7 +84,7 @@ function ThreatCard({ pkt }: { pkt: PacketEntry }) {
 
         {/* Source */}
         {pkt.source === 'manual' && (
-          <span className="mono-label flex-shrink-0" style={{ color: '#60a5fa' }}>MANUAL</span>
+          <span className="mono-label flex-shrink-0" style={{ color: '#3B82F6' }}>MANUAL</span>
         )}
 
         {/* Top features preview */}
@@ -110,14 +110,14 @@ function ThreatCard({ pkt }: { pkt: PacketEntry }) {
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <div className="px-5 pb-5 border-t border-[rgba(255,255,255,0.06)] grid grid-cols-2 gap-6 pt-4">
+            <div className="px-5 pb-5 border-t border-[rgba(var(--ink-rgb),0.08)] grid grid-cols-2 gap-6 pt-4">
               {/* Feature importance */}
               <div>
                 <p className="mono-label mb-3">Feature Attribution</p>
                 {sorted.length > 0 ? (
                   <div className="space-y-2.5">
                     {sorted.map((f, i) => {
-                      const gc = GROUP_COLORS[f.group] ?? '#64748b'
+                      const gc = GROUP_COLORS[f.group] ?? 'var(--text-tertiary)'
                       const pct = (f.importance / maxImp) * 100
                       return (
                         <div key={f.name} className="flex items-center gap-2">
@@ -150,7 +150,7 @@ function ThreatCard({ pkt }: { pkt: PacketEntry }) {
                 <p className="mono-label mb-3">Defence Rule</p>
                 <div className="space-y-2 text-xs font-mono">
                   {pkt.tier === 'LOW' ? (
-                    <div className="rounded-lg p-3" style={{ background: 'rgba(255,71,87,0.06)', border: '1px solid rgba(255,71,87,0.2)' }}>
+                    <div className="rounded-lg p-3" style={{ background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.2)' }}>
                       <p className="text-neon-red font-bold mb-1">Rule Not Generated</p>
                       <p className="text-ink-2">
                         Confidence {pkt.confidence != null ? `${(pkt.confidence * 100).toFixed(0)}%` : '?'} below threshold.
@@ -160,13 +160,13 @@ function ThreatCard({ pkt }: { pkt: PacketEntry }) {
                   ) : (
                     <>
                       {pkt.iptables_rule && (
-                        <div className="rounded-lg p-3" style={{ background: 'rgba(96,165,250,0.06)', border: '1px solid rgba(96,165,250,0.12)' }}>
+                        <div className="rounded-lg p-3" style={{ background: 'rgba(59,130,246,0.06)', border: '1px solid rgba(59,130,246,0.12)' }}>
                           <p className="text-neon-blue mb-1">iptables</p>
                           <p className="text-ink-1 break-all leading-relaxed">{pkt.iptables_rule}</p>
                         </div>
                       )}
                       {pkt.openflow_rule && (
-                        <div className="rounded-lg p-3" style={{ background: 'rgba(167,139,250,0.06)', border: '1px solid rgba(167,139,250,0.12)' }}>
+                        <div className="rounded-lg p-3" style={{ background: 'rgba(139,92,246,0.06)', border: '1px solid rgba(139,92,246,0.12)' }}>
                           <p className="text-neon-purple mb-1">OpenFlow</p>
                           <p className="text-ink-1 break-all leading-relaxed">{pkt.openflow_rule}</p>
                         </div>
@@ -201,11 +201,11 @@ export function ThreatsPage() {
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="px-6 py-4 border-b border-[rgba(255,255,255,0.06)] flex-shrink-0">
+      <div className="px-6 py-4 border-b border-[rgba(var(--ink-rgb),0.08)] flex-shrink-0">
         <div className="flex items-start justify-between">
           <div>
             <h1 className="text-lg font-bold text-ink-0 flex items-center gap-2">
-              <ShieldAlert size={18} style={{ color: '#ff4757' }} />
+              <ShieldAlert size={18} style={{ color: '#EF4444' }} />
               Threat Log
             </h1>
             <p className="mono-label mt-0.5">All detected malicious packets with explanations and defence rules</p>
@@ -213,7 +213,7 @@ export function ThreatsPage() {
 
           {/* Total counter */}
           <div className="text-right">
-            <p className="text-3xl font-bold font-mono" style={{ color: totalAttacks > 0 ? '#ff4757' : '#475569' }}>
+            <p className="text-3xl font-bold font-mono" style={{ color: totalAttacks > 0 ? '#EF4444' : 'var(--text-tertiary)' }}>
               {totalAttacks}
             </p>
             <p className="mono-label">total threats</p>
@@ -229,9 +229,9 @@ export function ThreatsPage() {
               onClick={() => setFilter(null)}
               className="px-3 py-1 rounded-lg text-xs font-mono font-bold transition-all"
               style={{
-                background: filter === null ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.02)',
-                border: `1px solid ${filter === null ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.06)'}`,
-                color: filter === null ? '#e2e8f0' : '#475569',
+                background: filter === null ? 'var(--color-primary-50)' : 'rgba(var(--ink-rgb),0.03)',
+                border: `1px solid ${filter === null ? 'var(--color-primary-500)' : 'rgba(var(--ink-rgb),0.08)'}`,
+                color: filter === null ? 'var(--color-primary-700)' : 'var(--text-secondary)',
               }}
             >
               ALL ({totalAttacks})
@@ -242,9 +242,9 @@ export function ThreatsPage() {
                 onClick={() => setFilter(filter === t ? null : t)}
                 className="px-3 py-1 rounded-lg text-xs font-mono font-bold transition-all"
                 style={{
-                  background: filter === t ? `${TYPE_BG[t]}` : 'rgba(255,255,255,0.02)',
-                  border: `1px solid ${filter === t ? TYPE_COLORS[t] + '50' : 'rgba(255,255,255,0.06)'}`,
-                  color: filter === t ? TYPE_COLORS[t] : '#475569',
+                  background: filter === t ? `${TYPE_BG[t]}` : 'rgba(var(--ink-rgb),0.03)',
+                  border: `1px solid ${filter === t ? TYPE_COLORS[t] + '50' : 'rgba(var(--ink-rgb),0.08)'}`,
+                  color: filter === t ? TYPE_COLORS[t] : 'var(--text-tertiary)',
                 }}
               >
                 {t} ({attackTypeCounts[t] ?? 0})
